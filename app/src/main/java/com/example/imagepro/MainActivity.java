@@ -27,13 +27,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        storage_ImageP_button=findViewById(R.id.storage_ImageP_button);
-        storage_ImageP_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,storageRecognitionActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-            }
-        });
+//        storage_ImageP_button=findViewById(R.id.storage_ImageP_button);
+//        storage_ImageP_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this,storageRecognitionActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//            }
+//        });
     }
 }
 

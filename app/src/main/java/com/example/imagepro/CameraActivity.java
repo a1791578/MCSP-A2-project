@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ public class CameraActivity extends AppCompatActivity {
     private Button take_picture_button;
     private Button upload_button;
     private TextView textview;
+    private ImageView backButton;
 
     private Bitmap bitmap = null;
     private final int REQUEST_CODE_PERMISSIONS = 10;
@@ -52,6 +55,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private static final int SELECT_PICTURE_REQUEST_CODE = 200;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +76,7 @@ public class CameraActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
 
-        // click take picture button
+        // take_picture_button touch event
         take_picture_button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -86,17 +90,28 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
-        // click upload picture button
+// upload_button touch event
         upload_button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     return true;
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    openGallery(); // 打开相册选择图片
+                    openGallery();
                     return true;
                 }
                 return false;
+            }
+        });
+
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back to MainActivity
+                Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -192,7 +207,7 @@ public class CameraActivity extends AppCompatActivity {
                     String recognizedText = visionText.getText();
                     Log.d(TAG, "Recognized text: " + recognizedText);
 
-                    // 隐藏预览图像并显示识别到的文本hide preview image and show reorganization result
+                    // hide preview image and show reorganization result
                     previewView.setVisibility(View.GONE);
                     textview.setVisibility(View.VISIBLE);
                     textview.setText(recognizedText);
@@ -227,4 +242,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
 }

@@ -14,16 +14,16 @@
         android:layout_height="50dp"
         android:id="@+id/camera_button"
         android:textAllCaps="false"
-        android:text="Image to Text"
+        android:text="SCAN THE MENU"
         tools:ignore="HardcodedText" />
 
-    <Button
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:id="@+id/storage_ImageP_button"
-        android:textAllCaps="false"
-        android:text="Storage Image Recognition"
-        tools:ignore="HardcodedText" />
+<!--    <Button-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:id="@+id/storage_ImageP_button"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:text="Storage Image Recognition"-->
+<!--        tools:ignore="HardcodedText" />-->
 
 
 </LinearLayout>
