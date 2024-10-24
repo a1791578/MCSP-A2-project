@@ -1,0 +1,36 @@
+[versions]
+agp = "8.5.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+material = "1.12.0"
+constraintlayout = "2.1.4"
+navigationFragment = "2.7.7"
+navigationUi = "2.7.7"
+viewpager2 = "1.1.0"
+recyclerview = "1.3.2"
+playServicesMaps = "19.0.0"
+
+
+[libraries]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
+viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+playServicesMaps = {module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+playServicesLocation = { group = "com.google.android.gms", name = "play-services-location", version = "21.3.0" }
+places = { group = "com.google.android.libraries.places", name = "places", version = "4.0.0" }
+
+glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.12.0" }
+glideCompiler = { group = "com.github.bumptech.glide", name = "compiler", version = "4.12.0" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+

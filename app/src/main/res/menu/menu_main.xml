@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/onboarding_2"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_shake"
+        android:icon="@drawable/onboarding_1"
+        android:title="Shake" />
+    <item
+        android:id="@+id/nav_nearby"
+        android:icon="@drawable/onboarding_4"
+        android:title="Nearby" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/onboarding_3"
+        android:title="Profile" />
+
+</menu>

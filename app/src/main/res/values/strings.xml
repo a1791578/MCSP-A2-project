@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FoodXplore</string>
+    <string name="onboarding_title">AR Your Food</string>
+    <string name="onboarding_description">Welcome\nBefore you order\nSee the Interactive Size Comparison</string>
+    <string name="onboarding_button">Get Started</string>
+    <string name="image_description">introduction image</string>
+
+    <string name="home_title">home page</string>
+
+    <string-array name="sort_options">
+        <item>Distance: Ascending</item>
+        <item>Distance: Descending</item>
+    </string-array>
+
+</resources>
