@@ -1,59 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <!-- 将 JavaCameraView 替换为 CameraX 的 PreviewView -->
-    <androidx.camera.view.PreviewView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:id="@+id/previewView"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/current_image"
-        android:scaleType="fitXY"
-        android:visibility="gone"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/textview"
-        android:background="@color/white"
-        android:visibility="gone"/>
-
+    <!-- Top Bar with Back Button -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/black"
-        android:layout_gravity="bottom"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_height="53dp"
+        android:layout_weight="0"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginTop="10dp">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/translate_button"
-            android:src="@drawable/translate_button_image"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="60dp"/>
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/take_picture_button"
-            android:src="@drawable/camera_button_image"
-            android:layout_marginTop="10dp"/>
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/show_image_button"
-            android:src="@drawable/image_image_24"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="60dp"/>
+            android:id="@+id/back_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="Back"
+            android:padding="10dp"
+            android:src="@drawable/back_button" />
     </LinearLayout>
-</FrameLayout>
+
+    <!-- Content Layout (Image Preview and Text) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="491dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Image Preview or Camera Preview -->
+        <androidx.camera.view.PreviewView
+            android:id="@+id/preview_image"
+            android:layout_width="370dp"
+            android:layout_height="460dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/black"
+            android:scaleType="fitXY" />
+
+        <!-- TextView for recognized text -->
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Bottom Buttons (Scan and Upload) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp">
+
+        <!-- Scan Button -->
+        <Button
+            android:id="@+id/scan_button"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#E3AA4D"
+            android:padding="16dp"
+            android:text="SCAN NOW"
+            android:textSize="45px"/>
+
+        <!-- Upload Button -->
+        <Button
+            android:id="@+id/upload_button"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/white"
+            android:padding="16dp"
+            android:text="UPLOAD PICTURE"
+            android:textColor="@color/black"
+            android:textSize="45px" />
+    </LinearLayout>
+
+</LinearLayout>

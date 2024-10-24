@@ -14,13 +14,16 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutionException;
 
@@ -38,63 +42,58 @@ public class CameraActivity extends AppCompatActivity {
     private static final String TAG = "CameraActivity";
     private PreviewView previewView;
     private ImageCapture imageCapture;
-    private ImageView take_picture_button;
-    private ImageView show_image_button;
-    private ImageView current_image;
+    private Button take_picture_button;
+    private Button upload_button;
     private TextView textview;
 
     private Bitmap bitmap = null;
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
 
+    private static final int SELECT_PICTURE_REQUEST_CODE = 200;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        previewView = findViewById(R.id.previewView);
-        take_picture_button = findViewById(R.id.take_picture_button);
-        show_image_button = findViewById(R.id.show_image_button);
-        current_image = findViewById(R.id.current_image);
+        // initialize
+        previewView = findViewById(R.id.preview_image);
+        take_picture_button = findViewById(R.id.scan_button);
+        upload_button = findViewById(R.id.upload_button);
         textview = findViewById(R.id.textview);
 
-        // initialize
         textview.setVisibility(View.GONE);
-        current_image.setVisibility(View.GONE);
 
+        // camera permission
         if (allPermissionsGranted()) {
             startCamera();
         } else {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
 
-        // click photo button
+        // click take picture button
         take_picture_button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     return true;
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    takePhoto(); // 调用拍照
+                    takePhoto();
                     return true;
                 }
                 return false;
             }
         });
 
-        // click image button
-        show_image_button.setOnTouchListener(new View.OnTouchListener() {
+        // click upload picture button
+        upload_button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     return true;
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    if (bitmap != null) {
-                        current_image.setVisibility(View.VISIBLE);
-                        current_image.setImageBitmap(bitmap);
-                    } else {
-                        Toast.makeText(CameraActivity.this, "Please take a picture first", Toast.LENGTH_LONG).show();
-                    }
+                    openGallery(); // 打开相册选择图片
                     return true;
                 }
                 return false;
@@ -102,7 +101,7 @@ public class CameraActivity extends AppCompatActivity {
         });
     }
 
-    // check camera permission
+    //
     private boolean allPermissionsGranted() {
         for (String permission : REQUIRED_PERMISSIONS) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -112,7 +111,7 @@ public class CameraActivity extends AppCompatActivity {
         return true;
     }
 
-
+    // start CameraX
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
 
@@ -145,12 +144,12 @@ public class CameraActivity extends AppCompatActivity {
         imageCapture.takePicture(ContextCompat.getMainExecutor(this), new ImageCapture.OnImageCapturedCallback() {
             @Override
             public void onCaptureSuccess(@NonNull ImageProxy image) {
-                bitmap = imageProxyToBitmap(image);  // convert it into bitmap
+                bitmap = imageProxyToBitmap(image);
                 image.close();
                 Log.d(TAG, "Photo captured successfully");
                 Toast.makeText(CameraActivity.this, "Photo taken", Toast.LENGTH_SHORT).show();
 
-                recognizeTextFromImage(bitmap);  // use ML Kit to recognize text
+                recognizeTextFromImage(bitmap);  // use MLKit for OCR
             }
 
             @Override
@@ -182,6 +181,7 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+
     private void recognizeTextFromImage(Bitmap bitmap) {
         InputImage image = InputImage.fromBitmap(bitmap, 0);
 
@@ -192,7 +192,8 @@ public class CameraActivity extends AppCompatActivity {
                     String recognizedText = visionText.getText();
                     Log.d(TAG, "Recognized text: " + recognizedText);
 
-                    // show the recognized text
+                    // 隐藏预览图像并显示识别到的文本hide preview image and show reorganization result
+                    previewView.setVisibility(View.GONE);
                     textview.setVisibility(View.VISIBLE);
                     textview.setText(recognizedText);
                 })
@@ -203,4 +204,27 @@ public class CameraActivity extends AppCompatActivity {
     }
 
 
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE_REQUEST_CODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE_REQUEST_CODE) {
+            Uri selectedImageUri = data.getData();
+            if (selectedImageUri != null) {
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                    recognizeTextFromImage(bitmap);  // use selected picture to recognize text
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 }
