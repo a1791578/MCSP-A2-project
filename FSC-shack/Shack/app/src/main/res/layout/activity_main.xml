@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.kongzue.stacklabelview.StackLabel xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/stackLabelView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:deleteButton="false"
+        app:selectMode="true"
+        app:maxSelectNum="1"
+        app:itemMargin="4dp"
+
+        app:paddingHorizontal="12dp"
+        app:paddingVertical="8dp"
+        app:textColor="#e6000000"
+        app:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/randomNumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Shake to get a random number"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+</LinearLayout>
