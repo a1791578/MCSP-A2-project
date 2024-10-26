@@ -18,8 +18,10 @@
         <activity android:name=".activity.PicActivity" />
         <activity android:name=".activity.ScanActivity" />
         <activity android:name=".activity.PageJumpActivity" />
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.WelcomeActivity"/>
         <activity
-            android:name=".activity.WelcomeActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
