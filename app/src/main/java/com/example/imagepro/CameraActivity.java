@@ -42,6 +42,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import android.widget.LinearLayout;
+
+
 public class CameraActivity extends AppCompatActivity {
 
     private static final String TAG = "CameraActivity";
@@ -51,6 +54,7 @@ public class CameraActivity extends AppCompatActivity {
     private Button upload_button;
     private TextView textview;
     private ImageView backButton;
+    private LinearLayout matchedItemsContainer;
 
     private Bitmap bitmap = null;
     private final int REQUEST_CODE_PERMISSIONS = 10;
@@ -70,9 +74,12 @@ public class CameraActivity extends AppCompatActivity {
         previewView = findViewById(R.id.preview_image);
         take_picture_button = findViewById(R.id.scan_button);
         upload_button = findViewById(R.id.upload_button);
-        textview = findViewById(R.id.textview);
+//        textview = findViewById(R.id.textview);
+        backButton = findViewById(R.id.back_button);
+        matchedItemsContainer = findViewById(R.id.matchedItemsContainer);
 
-        textview.setVisibility(View.GONE);
+//        textview.setVisibility(View.GONE);
+        matchedItemsContainer.setVisibility(View.GONE);
 
         // camera permission
         if (allPermissionsGranted()) {
@@ -205,26 +212,49 @@ public class CameraActivity extends AppCompatActivity {
                     String recognizedText = visionText.getText();
                     Log.d(TAG, "Recognized text: " + recognizedText);
 
-                    // use compareWithMenu() o compare recognition result and available food
+                    // Compare recognized text with menu items
                     List<String> matchedItems = compareWithMenu(recognizedText);
 
+                    // Hide preview and show matched items container
                     previewView.setVisibility(View.GONE);
-                    textview.setVisibility(View.VISIBLE);
+                    matchedItemsContainer.setVisibility(View.VISIBLE);
+                    matchedItemsContainer.removeAllViews(); // Clear previous items
 
                     if (!matchedItems.isEmpty()) {
-                        StringBuilder matchedText = new StringBuilder();
                         for (String item : matchedItems) {
-                            matchedText.append(item).append("\n");
+                            addMenuItemToLayout(item, "AUD$10"); // Add each matched item to the layout with price
                         }
-                        textview.setText(matchedText.toString());
                     } else {
-                        textview.setText("No matching dishes found.");
+                        Toast.makeText(this, "No matching dishes found.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Text recognition failed", e);
                     Toast.makeText(CameraActivity.this, "Text recognition failed", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+
+    // Add a menu item to the matched items container
+    private void addMenuItemToLayout(String itemName, String price) {
+        View menuItemView = getLayoutInflater().inflate(R.layout.menu_item_layout, matchedItemsContainer, false);
+
+        // Set item name, price, and button (currently from local)
+        TextView itemNameTextView = menuItemView.findViewById(R.id.menu_item_name);
+        TextView priceTextView = menuItemView.findViewById(R.id.menu_item_price);
+        Button viewArButton = menuItemView.findViewById(R.id.menu_item_view_ar_button);
+
+        itemNameTextView.setText(itemName);
+        priceTextView.setText(price);
+
+        // Handle View AR button click if necessary
+        viewArButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Launching AR for " + itemName, Toast.LENGTH_SHORT).show();
+            // Implement AR functionality here
+        });
+
+        // Add the menu item view to the container
+        matchedItemsContainer.addView(menuItemView);
     }
 
     private List<String> compareWithMenu(String recognizedText) {
