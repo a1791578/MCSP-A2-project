@@ -38,6 +38,9 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -54,6 +57,8 @@ public class CameraActivity extends AppCompatActivity {
     private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
 
     private static final int SELECT_PICTURE_REQUEST_CODE = 200;
+
+    private final List<String> menuItems = Arrays.asList("Espresso", "Lemonade", "Chocolate Muffin");
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -116,7 +121,7 @@ public class CameraActivity extends AppCompatActivity {
         });
     }
 
-    //
+
     private boolean allPermissionsGranted() {
         for (String permission : REQUIRED_PERMISSIONS) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -129,21 +134,15 @@ public class CameraActivity extends AppCompatActivity {
     // start CameraX
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-
         cameraProviderFuture.addListener(() -> {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                 Preview preview = new Preview.Builder().build();
-
                 imageCapture = new ImageCapture.Builder().build();
-
                 CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
-
                 preview.setSurfaceProvider(previewView.getSurfaceProvider());
-
                 cameraProvider.unbindAll();
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture);
-
             } catch (ExecutionException | InterruptedException e) {
                 Log.e(TAG, "Use case binding failed", e);
             }
@@ -199,7 +198,6 @@ public class CameraActivity extends AppCompatActivity {
 
     private void recognizeTextFromImage(Bitmap bitmap) {
         InputImage image = InputImage.fromBitmap(bitmap, 0);
-
         TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
 
         recognizer.process(image)
@@ -207,15 +205,37 @@ public class CameraActivity extends AppCompatActivity {
                     String recognizedText = visionText.getText();
                     Log.d(TAG, "Recognized text: " + recognizedText);
 
-                    // hide preview image and show reorganization result
+                    // use compareWithMenu() o compare recognition result and available food
+                    List<String> matchedItems = compareWithMenu(recognizedText);
+
                     previewView.setVisibility(View.GONE);
                     textview.setVisibility(View.VISIBLE);
-                    textview.setText(recognizedText);
+
+                    if (!matchedItems.isEmpty()) {
+                        StringBuilder matchedText = new StringBuilder();
+                        for (String item : matchedItems) {
+                            matchedText.append(item).append("\n");
+                        }
+                        textview.setText(matchedText.toString());
+                    } else {
+                        textview.setText("No matching dishes found.");
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Text recognition failed", e);
                     Toast.makeText(CameraActivity.this, "Text recognition failed", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private List<String> compareWithMenu(String recognizedText) {
+        List<String> matchedItems = new ArrayList<>();
+
+        for (String menuItem : menuItems) {
+            if (recognizedText.contains(menuItem)) {
+                matchedItems.add(menuItem);
+            }
+        }
+        return matchedItems;
     }
 
 
@@ -242,7 +262,5 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 }
