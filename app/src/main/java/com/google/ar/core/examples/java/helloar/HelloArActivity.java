@@ -25,6 +25,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import android.os.Vibrator;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.ArCoreApk.Availability;
@@ -97,7 +99,8 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
 
   private static final String SEARCHING_PLANE_MESSAGE = "Searching for surfaces...";
   private static final String WAITING_FOR_TAP_MESSAGE = "Tap on a surface to place an object.";
-
+  private static final String GUIDE_FOR_DELETE_MODEL = "Tap the yellow button above to delete the model.";
+  private static final String GUIDE_FOR_WATCHING_MODEL = "Object placed! Move your device around to inspect the object from all sides.";
   // See the definition of updateSphericalHarmonicsCoefficients for an explanation of these
   // constants.
   private static final float[] sphericalHarmonicFactors = {
@@ -124,6 +127,7 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
 
   private boolean installRequested;
 
+  private Vibrator vibrator;
   private Session session;
   private final SnackbarHelper messageSnackbarHelper = new SnackbarHelper();
   private DisplayRotationHelper displayRotationHelper;
@@ -202,42 +206,41 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
 
     Log.d(TAG, "onCreate: Activity Created");
 
-    // 初始化 SurfaceView
+    //shake
+    vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
     surfaceView = findViewById(R.id.surfaceview);
     displayRotationHelper = new DisplayRotationHelper(/* context= */ this);
 
-    // 从 Intent 中获取模型标识符
+
     Intent intent = getIntent();
     String modelIdentifier = intent.getStringExtra("MODEL_IDENTIFIER");
     Log.d(TAG, "Intent received: " + getIntent());
     Log.d(TAG, "Model Identifier: " + intent.getStringExtra("MODEL_IDENTIFIER"));
     if (modelIdentifier != null) {
       Log.d(TAG, "onCreate: Model Identifier - " + modelIdentifier);
-      // 设置当前模型名称
       setCurrentModelName(modelIdentifier);
     }else{
       Log.d(TAG, "onCreate: No Model Identifier - ");
     }
 
 
-    // 设置触摸监听器
     tapHelper = new TapHelper(/* context= */ this);
     surfaceView.setOnTouchListener(tapHelper);
 
-    // 设置渲染器
+
     render = new SampleRender(surfaceView, this, getAssets());
 
     installRequested = false;
 
-    // 深度和即时放置设置初始化
     depthSettings.onCreate(this);
     instantPlacementSettings.onCreate(this);
 
-    // 删除按钮点击事件
+
     Button deleteButton = findViewById(R.id.delete_button);
     deleteButton.setOnClickListener(v -> deletePlacedModel());
 
-    // 设置按钮点击事件，显示设置菜单
+
     ImageButton settingsButton = findViewById(R.id.settings_button);
     settingsButton.setOnClickListener(
             new View.OnClickListener() {
@@ -249,6 +252,16 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
                 popup.show();
               }
             });
+    ImageButton backButton = findViewById(R.id.back_button);
+    backButton.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+
+                onBackPressed();
+              }
+            });
+
   }
 
 
@@ -509,6 +522,8 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
       return;
     }
 
+
+
     if (hasPlacedObject && virtualObjectMesh != null) {
       float[] dimensions = virtualObjectMesh.calculateBoundingBox();
       if (dimensions != null) {
@@ -582,12 +597,16 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
     // Handle one tap per frame.
     handleTap(frame, camera);
 
+
     // Keep the screen unlocked while tracking, but allow it to lock when tracking stops.
     trackingStateHelper.updateKeepScreenOnFlag(camera.getTrackingState());
 
     // Show a message based on whether tracking has failed, if planes are detected, and if the user
     // has placed any objects.
     String message = null;
+    if (hasPlacedObject) {
+      message = GUIDE_FOR_DELETE_MODEL;
+    }
     if (camera.getTrackingState() == TrackingState.PAUSED) {
       if (camera.getTrackingFailureReason() == TrackingFailureReason.NONE) {
         message = SEARCHING_PLANE_MESSAGE;
@@ -733,9 +752,14 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
           // depth-based occlusion. This dialog needs to be spawned on the UI thread.
           this.runOnUiThread(this::showOcclusionDialogIfNeeded);
 
-          //make the boolean be true
+          vibrateOnPlace();
           hasPlacedObject = true;
 
+          runOnUiThread(() -> {
+            Toast toast = Toast.makeText(this, GUIDE_FOR_WATCHING_MODEL, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0); // 设置 Toast 显示在屏幕中央
+            toast.show();
+          });
           // Hits are sorted by depth. Consider only closest hit on a plane, Oriented Point, or
           // Instant Placement Point.
           break;
@@ -933,10 +957,23 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
     }
 
     wrappedAnchors.clear();
-
+    vibrateOnDelete();
     hasPlacedObject = false;
 
     runOnUiThread(() -> Toast.makeText(this, "FOOD MODEL DELETED", Toast.LENGTH_SHORT).show());
+  }
+  private void vibrateOnPlace() {
+    if (vibrator != null) {
+      // 振动50毫秒
+      vibrator.vibrate(50);
+    }
+  }
+
+  private void vibrateOnDelete() {
+    if (vibrator != null) {
+      // 振动100毫秒
+      vibrator.vibrate(100);
+    }
   }
 
 

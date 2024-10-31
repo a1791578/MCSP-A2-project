@@ -46,6 +46,24 @@ public class ModelSelectionActivity extends AppCompatActivity{
             }
         });
 
+        Button beefBurgerModelButton = findViewById(R.id.button_beefBurger);
+        beefBurgerModelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start HelloArActivity with the selected model identifier
+                startHelloArActivity("beefBurger");
+            }
+        });
+
+        Button colaModelButton = findViewById(R.id.button_cola);
+        colaModelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start HelloArActivity with the selected model identifier
+                startHelloArActivity("cola");
+            }
+        });
+
         // Add more buttons and model identifiers as needed
     }
 

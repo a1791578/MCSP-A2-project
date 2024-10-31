@@ -28,7 +28,19 @@
         android:id="@+id/button_chickenBurger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ChickenBurger" />
+        android:text="Chicken Burger" />
+
+    <Button
+        android:id="@+id/button_beefBurger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Beef Burger" />
+
+    <Button
+        android:id="@+id/button_cola"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cola" />
 
     <!-- Add more buttons for additional models -->
 </LinearLayout>
