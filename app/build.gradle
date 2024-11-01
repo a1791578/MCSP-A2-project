@@ -1,0 +1,97 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android' version '1.8.22'
+}
+
+configurations.configureEach {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.jetbrains.kotlin') {
+            details.useVersion "1.8.22"
+        }
+    }
+}
+
+android {
+    compileSdkVersion 34
+
+    defaultConfig {
+        applicationId "com.example.uiappliction"
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2'
+
+    // lcy dependencies
+    implementation "com.airbnb.android:lottie:5.2.0"
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // 底部导航按钮
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
+    // 带头部的RecycleView
+    implementation 'se.emilsjolander:stickylistheaders:2.7.0'
+    // 下拉框
+    implementation 'io.github.youth5201314:banner:2.2.2'
+
+    // room
+    def room_version = "2.4.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Shape 框架：https://github.com/getActivity/ShapeView
+    implementation 'com.github.getActivity:ShapeView:8.5'
+    // 悬浮窗框架：https://github.com/getActivity/XToast
+    implementation 'com.github.getActivity:XToast:8.5'
+
+    implementation 'com.google.android.libraries.places:places:2.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation "com.kongzue.stacklabel:StackLabel:1.2.0"
+
+    implementation "androidx.camera:camera-core:1.3.4"
+    implementation "androidx.camera:camera-camera2:1.3.4"
+    implementation "androidx.camera:camera-lifecycle:1.3.4"
+    implementation "androidx.camera:camera-view:1.3.4"
+
+    implementation 'com.google.mlkit:text-recognition:16.0.1'
+    implementation 'com.google.mlkit:text-recognition-chinese:16.0.1'
+    implementation 'com.google.mlkit:text-recognition-devanagari:16.0.1'
+
+    // ARCore (Google Play Services for AR) library.
+    implementation 'com.google.ar:core:1.45.0'
+
+    // Obj - a simple Wavefront OBJ file loader
+    // https://github.com/javagl/Obj
+    implementation 'de.javagl:obj:0.4.0'
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+}

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.ZhongFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:src="@mipmap/close"
+                android:id="@+id/rest"
+                android:scaleType="center"
+                android:layout_gravity="left"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Shake to Decide?"
+                android:textSize="24dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black1"
+                android:gravity="center" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/bg_radis">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CATEGORIES"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/grey1"
+                android:gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CLEAR ALL"
+                android:layout_centerVertical="true"
+                android:textSize="12dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/grey1"
+                android:gravity="left" />
+        </RelativeLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:textColor="@color/grey1"
+                    android:text="ALL" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/grey1"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="BRUNCH" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/grey1"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="DINNER" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tva"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:textColor="@color/white"
+                    android:text="SUEGERS" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/grey1"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="CHINESE" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/grey1"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="PIZZA" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:textColor="@color/grey1"
+                    android:text="SALADS" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/grey1"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="SOUPS" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/grey1"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="BREAKFAST" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@drawable/bg_radis">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DIETARY"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/grey1"
+                android:gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CLEAR ALL"
+                android:layout_centerVertical="true"
+                android:textSize="12dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/grey1"
+                android:gravity="left" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tva"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:textColor="@color/white"
+                    android:text="ANY" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/grey1"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="VEGETARIAN" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/grey1"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="VEGAN" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tv"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:textColor="@color/grey1"
+                    android:text="GLUTEN-FREE" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@drawable/bg_radis">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PRICE RANGE"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/grey1"
+                android:gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CLEAR ALL"
+                android:layout_centerVertical="true"
+                android:textSize="12dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/grey1"
+                android:gravity="left" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/s1" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/s3" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/s2" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/s4" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/s5" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:id="@+id/rl"
+        android:background="@mipmap/pprimary">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Shake Now!" />
+    </RelativeLayout>
+</LinearLayout>

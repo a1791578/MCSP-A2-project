@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">OrderFoodOL</string>
+    <string name="login_text">Login</string>
+    <string name="login_btn_text">GO！</string>
+    <string name="login_username_hint">Please enter your username or mobile phone number</string>
+    <string name="login_password_hint">Please enter your password</string>
+    <string name="signup_username_hint">Please enter your username</string>
+    <string name="signup_phoneNumber_hint" >Please input your mobile phone number (China)</string>
+    <string name="signup_text" >注册</string>
+    <string name="login_signup" >Don\'t have an account?</string>
+    <string name="buttomAdd">add one to cart</string>
+    <string name="buttonSub" >sub one from cart</string>
+    <string name="hello_blank_fragment" >Helloblankfragment</string>
+    <string name="pay_title" >Please enter the payment code</string>
+    <string name="defaultValue">default</string>
+
+    <string-array name="setting_language">
+        <item>English</item>
+        <item>Chinese</item>
+    </string-array>
+    <string name="commit">payment</string>
+    <string name="shopping_car_title">Shopping Cart</string>
+    <string name="clear_shopping_car">empty</string>
+    <string name="confirm_to_pay">confirm the payment</string>
+    <string name="confirm_message">Are you sure you want to pay and generate an order\? \N Before paying, remember to open the shopping cart to see if there are any coupons~</string>
+    <string name="confirm">confirm</string>
+    <string name="cancel">cancel</string>
+
+    <!--自定义口味-->
+    <string name="spicyDegree">Spicy </string>
+    <string name="spicy_1">Not spicy</string>
+    <string name="spicy_2">Slightly spicy</string>
+    <string name="spicy_3">Medium Spicy</string>
+    <string name="spicy_4">Spicy</string>
+    <string name="sweetDegree">Sweetness</string>
+    <string name="sweet_1">0% sweet</string>
+    <string name="sweet_2">30% sweet</string>
+    <string name="sweet_3">70% sweet</string>
+    <string name="sweet_4">100% sweet</string>
+    <string name="shopping_car_wait_for_adding">There is no food in the shopping cart. Welcome guests to feed~</string>
+
+    <!--    支付页面提示字段-->
+    <string name="pay_sub_title">Pay to Lanyuan Canteen</string>
+    <string name="pay_money">￥</string>
+    <string name="pay_success">Payment succeeded</string>
+    <string name="pay_fail">Payment failed, please check the payment password</string>
+    <string name="pay_cancel">Payment cancellation</string>
+    <string name="pay_set_title">Please set the payment password</string>
+    <string name="pay_set_sub_title">The payment password cannot be modified. Please do not disclose the payment password to others</string>
+    <!--    登录页面提示字段-->
+    <string name="login_fail">Login failed, please check the account or password</string>
+    <string name="login_username_empty">User name or mobile number cannot be empty</string>
+    <string name="login_password_empty">Password cannot be empty</string>
+    <!--    注册页面提示字段-->
+    <string name="register_success">login was successful</string>
+    <string name="register_fail">To set the payment password</string>
+    <string name="register_username_empty">User name cannot be empty</string>
+    <string name="register_password_empty">Password cannot be empty</string>
+    <string name="register_password_less">Password is less than six digits</string>
+    <string name="register_phone_empty">Mobile number cannot be empty</string>
+    <string name="register_username_exist">User name already exists</string>
+    <string name="register_phone_exist">Mobile number already exists</string>
+    <string name="register_phone_error">Mobile number format error</string>
+    <string name="chooseCoupon">Select coupon</string>
+    <string name="coupon">coupon</string>
+    <string name="history_orders">Historical Orders</string>
+    <string name="recent_order">Recent Orders</string>
+    <string name="Notification">notice</string>
+    <string name="Nation">country</string>
+    <string name="Language">language</string>
+    <string name="Account">account</string>
+
+    <string name="PEYOP">Please enter the old password</string>
+    <string name="PEYNW">Please enter a new password</string>
+    <string name="version">edition</string>
+    <string name="update">to update</string>
+    <string name="change">change</string>
+    <string name="APPSETTING">APP settings</string>
+    <string name="ONLINE">on-line</string>
+    <string name="Hi">Hello</string>
+    <string name="languagesetting">The language will be switched automatically according to your phone language</string>
+    <string name="menu">Menu</string>
+    <string name="orders">Orders</string>
+    <string name="settings">Settings</string>
+    <string name="successfullyReceived">successfully received</string>
+    <string name="welcome">Welcome</string>
+    <string name="evaluate">Evaluation of This Meal</string>
+
+</resources>

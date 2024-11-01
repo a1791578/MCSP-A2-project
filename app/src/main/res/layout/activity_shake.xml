@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/Shaketitle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="Shake what your want"
+        android:background="#FFDB58"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Shaketitle"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.kongzue.stacklabelview.StackLabel xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/stackLabelView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:deleteButton="false"
+            app:selectMode="true"
+            app:maxSelectNum="1"
+            app:itemMargin="4dp"
+
+            app:paddingHorizontal="12dp"
+            app:paddingVertical="8dp"
+            app:textColor="#e6000000"
+            app:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/randomNumberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Shake to get a random number"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/bottom_navigation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="#FFDB58"
+    app:menu="@menu/menu_nav"
+    app:labelVisibilityMode="labeled"/>
+</RelativeLayout>

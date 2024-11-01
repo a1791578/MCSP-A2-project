@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: de.javagl:obj:0.4.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="de.javagl" artifactId="obj" version="0.4.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.javagl/obj/0.4.0/551dfcd4074cd8c9382941fe4f9d5b30f47d8460/obj-0.4.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.javagl/obj/0.4.0/99ba57a69440bdd3a52ed7267f0d1f3c18aa3ccf/obj-0.4.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.javagl/obj/0.4.0/5a750bfb37e57695cdbea9544926aa5096b87502/obj-0.4.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
