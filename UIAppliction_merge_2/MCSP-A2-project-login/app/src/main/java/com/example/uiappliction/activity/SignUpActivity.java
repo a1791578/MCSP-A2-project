@@ -30,7 +30,7 @@ import com.hjq.xtoast.XToast;
  */
 public class SignUpActivity extends AppCompatActivity
         implements HandlerAction {
-    EditText mUsername, mPassword, mPhoneNumber;
+    EditText mUsername, mPhoneNumber;
     SubmitButton mSignUpButton;
     SwitchButton mGender;
     private String TAG = "SignUpActivity";
@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity
         setContentView(R.layout.activity_signup);
 
         mUsername = findViewById(R.id.textView_username);
-        mPassword = findViewById(R.id.textView_password);
+//        mPassword = findViewById(R.id.textView_password);
         mPhoneNumber = findViewById(R.id.textView_phoneNumber);
         mGender = findViewById(R.id.SwitchButton_gender);
         mSignUpButton = findViewById(R.id.btn_signup);
@@ -69,39 +69,31 @@ public class SignUpActivity extends AppCompatActivity
         findViewById(R.id.btn_signup).setOnClickListener(v -> {
             mSignUpButton.showProgress();
             String username = this.mUsername.getText().toString();
-            String password = this.mPassword.getText().toString();
+//            String password = this.mPassword.getText().toString();
             String phoneNumber = this.mPhoneNumber.getText().toString();
             //判断是否为空
-            if (checkEmpty(username, password, phoneNumber)) {
-                //查询数据库
-                if (checkDataBase(username, password, phoneNumber, personDao)) {
-                    //添加用户
-                    Person person = new Person(username, password, Long.parseLong(phoneNumber), isFemale[0], 0);
-                    personDao.insert(person);
-                    mSignUpButton.showSucceed();
-                    Log.d(TAG, "onSignUp: " + person.toString());
-//                                    Toast.makeText(SignUpActivity.this, getRString(R.string.register_success), Toast.LENGTH_SHORT).show();
-                    //使用HandlerAction接口的PostDelayed方法实现延时跳转
-                    postDelayed(() -> {
-                        //构建Bundle对象传递person
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("user", person);
+            if (checkEmpty(username, phoneNumber)) {
 
-                        navigateToLogin.putExtras(bundle);
-                        startActivity(navigateToLogin);
-                        finish();
-                    }, 2000);
-                }
+                mSignUpButton.showSucceed();
+//                                    Toast.makeText(SignUpActivity.this, getRString(R.string.register_success), Toast.LENGTH_SHORT).show();
+                //使用HandlerAction接口的PostDelayed方法实现延时跳转
+                postDelayed(() -> {
+                    //构建Bundle对象传递person
+                    Bundle bundle = new Bundle();
+                    navigateToLogin.putExtras(bundle);
+                    startActivity(navigateToLogin);
+                    finish();
+                }, 2000);
+
             }
         });
 
         //点击到img则收起键盘
         findViewById(R.id.imageView_bg).setOnClickListener(v -> {
             //检测是否有焦点
-            if (mUsername.isFocused() || mPassword.isFocused()) {
+            if (mUsername.isFocused()) {
                 //清除焦点
                 mUsername.clearFocus();
-                mPassword.clearFocus();
             }
             //收起键盘
             hideKeyboard(this);
@@ -128,12 +120,9 @@ public class SignUpActivity extends AppCompatActivity
         return false;
     }
 
-    private boolean checkEmpty(String username, String password, String phoneNumber) {
+    private boolean checkEmpty(String username, String phoneNumber) {
         if (username.isEmpty()) {
             newErrorXToast(R.string.register_username_empty);
-            mSignUpButton.showError(2000);
-        } else if (password.isEmpty()) {
-            newErrorXToast(R.string.register_password_empty);
             mSignUpButton.showError(2000);
         } else if (phoneNumber.isEmpty()) {
             newErrorXToast(R.string.register_phone_empty);

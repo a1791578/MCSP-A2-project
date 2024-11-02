@@ -78,24 +78,24 @@
         app:regexType="mobile"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <com.example.uiappliction.Utils.PasswordEditText
-        android:id="@+id/textView_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+<!--    <com.example.uiappliction.Utils.PasswordEditText-->
+<!--        android:id="@+id/textView_password"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="32dp"-->
+<!--        android:layout_marginEnd="32dp"-->
 
-        android:ems="10"
-        android:hint="@string/login_password_hint"
-        android:inputType="textPassword"
+<!--        android:ems="10"-->
+<!--        android:hint="@string/login_password_hint"-->
+<!--        android:inputType="textPassword"-->
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_username"
-        app:layout_constraintVertical_bias="0.083"
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView_username"-->
+<!--        app:layout_constraintVertical_bias="0.083"-->
 
-        tools:ignore="SpeakableTextPresentCheck" />
+<!--        tools:ignore="SpeakableTextPresentCheck" />-->
 
     <LinearLayout
         android:layout_width="wrap_content"

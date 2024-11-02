@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "800870415415",
+    "project_id": "mcsp-d9ff5",
+    "storage_bucket": "mcsp-d9ff5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800870415415:android:cf48f0b70a420418cb13b2",
+        "android_client_info": {
+          "package_name": "com.example.uiappliction"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyL8Ca269Yh9QuAStXVN_9L2B5dPEjuR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
