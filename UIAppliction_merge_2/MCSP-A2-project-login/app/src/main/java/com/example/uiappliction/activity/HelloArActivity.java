@@ -194,6 +194,8 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
   private String currentModelName = "default_model";  // 以默认模型名称进行初始化
   private static final int NUMBER_OF_ENTRIES_PER_VERTEX = 3; // 3 for X, Y, Z coordinates
 
+  private String fromPage;
+
 
 
   public void setCurrentModelName(String modelName) {
@@ -206,7 +208,6 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
     Log.d(TAG, "onCreate: Activity Created");
 
     //shake
@@ -217,6 +218,8 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
 
 
     Intent intent = getIntent();
+    fromPage = intent.getStringExtra("FROM_PAGE");
+
     String modelIdentifier = intent.getStringExtra("MODEL_IDENTIFIER");
     Log.d(TAG, "Intent received: " + getIntent());
     Log.d(TAG, "Model Identifier: " + intent.getStringExtra("MODEL_IDENTIFIER"));
@@ -980,9 +983,21 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
   }
 
 
-
-
-
+  @Override
+  public void onBackPressed() {
+    Intent intent;
+    if ("Shake".equals(fromPage)) {
+      intent = new Intent(HelloArActivity.this, ShakeActivity.class);
+      Log.d("HelloArActivity", "Navigating back to ShakeActivity");
+    }
+    else {
+      intent = new Intent(HelloArActivity.this, CameraActivity.class);
+      Log.d("HelloArActivity", "Navigating back to CameraActivity");
+    }
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    startActivity(intent);
+    finish();
+  }
 }
 
 /**

@@ -4,16 +4,49 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uiappliction.R;
 
 public class ModelSelectionActivity extends AppCompatActivity{
+    private String fromPage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model_selection);
+
+        String itemName = getIntent().getStringExtra("ITEM_NAME");
+        fromPage = getIntent().getStringExtra("FROM_PAGE");
+
+        if (itemName != null) {
+            switch (itemName) {
+                case "Coffee":
+                    startHelloArActivity("coffee");
+                    break;
+                case "Pizza":
+                    startHelloArActivity("pizza");
+                    break;
+                case "Chicken Thigh":
+                    startHelloArActivity("chickenThigh");
+                    break;
+                case "Chicken Burger":
+                    startHelloArActivity("chickenBurger");
+                    break;
+                case "Beef Burger":
+                    startHelloArActivity("beefBurger");
+                    break;
+                case "Cola":
+                    startHelloArActivity("cola");
+                    break;
+                default:
+                    Toast.makeText(this, "AR model not found for " + itemName, Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+
+        /*
 
         // Set up buttons for each model
         Button coffeeModelButton = findViewById(R.id.button_coffee);
@@ -67,6 +100,7 @@ public class ModelSelectionActivity extends AppCompatActivity{
                 startHelloArActivity("cola");
             }
         });
+         */
 
         // Add more buttons and model identifiers as needed
     }
@@ -74,6 +108,7 @@ public class ModelSelectionActivity extends AppCompatActivity{
     private void startHelloArActivity(String modelIdentifier) {
         Intent intent = new Intent(this, HelloArActivity.class);
         intent.putExtra("MODEL_IDENTIFIER", modelIdentifier);
+        intent.putExtra("FROM_PAGE", fromPage);
         startActivity(intent);
     }
 }
