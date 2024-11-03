@@ -17,12 +17,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.uiappliction.R;
 
-/**
- * author : Android 轮子哥
- * github : https://github.com/getActivity/AndroidProject
- * time   : 2019/08/25
- * desc   : 密码隐藏显示 EditText
- */
+
 public final class PasswordEditText extends RegexEditText
         implements View.OnTouchListener,
         View.OnFocusChangeListener, TextWatcher {
@@ -102,9 +97,7 @@ public final class PasswordEditText extends RegexEditText
         mTouchListener = onTouchListener;
     }
 
-    /**
-     * {@link OnFocusChangeListener}
-     */
+    
 
     @Override
     public void onFocusChange(View view, boolean hasFocus) {
@@ -118,9 +111,7 @@ public final class PasswordEditText extends RegexEditText
         }
     }
 
-    /**
-     * {@link OnTouchListener}
-     */
+    
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -163,9 +154,7 @@ public final class PasswordEditText extends RegexEditText
         return mTouchListener != null && mTouchListener.onTouch(view, event);
     }
 
-    /**
-     * {@link TextWatcher}
-     */
+    
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {

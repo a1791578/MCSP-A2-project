@@ -14,12 +14,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.uiappliction.R;
 
-/**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2018/10/18
- *    desc   : 带清除按钮的 EditText
- */
+
 public final class ClearEditText extends RegexEditText
         implements View.OnTouchListener,
         View.OnFocusChangeListener, TextWatcher {
@@ -75,9 +70,7 @@ public final class ClearEditText extends RegexEditText
         mTouchListener = onTouchListener;
     }
 
-    /**
-     * {@link View.OnFocusChangeListener}
-     */
+    
 
     @Override
     public void onFocusChange(View view, boolean hasFocus) {
@@ -91,9 +84,7 @@ public final class ClearEditText extends RegexEditText
         }
     }
 
-    /**
-     * {@link View.OnTouchListener}
-     */
+    
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -122,9 +113,7 @@ public final class ClearEditText extends RegexEditText
         return mTouchListener != null && mTouchListener.onTouch(view, event);
     }
 
-    /**
-     * {@link TextWatcher}
-     */
+    
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {

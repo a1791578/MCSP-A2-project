@@ -1,18 +1,4 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.example.uiappliction.Utils.samplerender;
 
 import android.content.res.AssetManager;
@@ -21,7 +7,7 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-/** A SampleRender context. */
+
 public class SampleRender {
   private static final String TAG = SampleRender.class.getSimpleName();
 
@@ -30,13 +16,7 @@ public class SampleRender {
   private int viewportWidth = 1;
   private int viewportHeight = 1;
 
-  /**
-   * Constructs a SampleRender object and instantiates GLSurfaceView parameters.
-   *
-   * @param glSurfaceView Android GLSurfaceView
-   * @param renderer Renderer implementation to receive callbacks
-   * @param assetManager AssetManager for loading Android resources
-   */
+  
   public SampleRender(GLSurfaceView glSurfaceView, Renderer renderer, AssetManager assetManager) {
     this.assetManager = assetManager;
     glSurfaceView.setPreserveEGLContextOnPause(true);
@@ -60,7 +40,7 @@ public class SampleRender {
 
           @Override
           public void onDrawFrame(GL10 gl) {
-            clear(/*framebuffer=*/ null, 0f, 0f, 0f, 1f);
+            clear( null, 0f, 0f, 0f, 1f);
             renderer.onDrawFrame(SampleRender.this);
           }
         });
@@ -68,28 +48,19 @@ public class SampleRender {
     glSurfaceView.setWillNotDraw(false);
   }
 
-  /** Draw a {@link Mesh} with the specified {@link Shader}. */
+  
   public void draw(Mesh mesh, Shader shader) {
-    draw(mesh, shader, /*framebuffer=*/ null);
+    draw(mesh, shader,  null);
   }
 
-  /**
-   * Draw a {@link Mesh} with the specified {@link Shader} to the given {@link Framebuffer}.
-   *
-   * <p>The {@code framebuffer} argument may be null, in which case the default framebuffer is used.
-   */
+  
   public void draw(Mesh mesh, Shader shader, Framebuffer framebuffer) {
     useFramebuffer(framebuffer);
     shader.lowLevelUse();
     mesh.lowLevelDraw();
   }
 
-  /**
-   * Clear the given framebuffer.
-   *
-   * <p>The {@code framebuffer} argument may be null, in which case the default framebuffer is
-   * cleared.
-   */
+  
   public void clear(Framebuffer framebuffer, float r, float g, float b, float a) {
     useFramebuffer(framebuffer);
     GLES30.glClearColor(r, g, b, a);
@@ -100,31 +71,19 @@ public class SampleRender {
     GLError.maybeThrowGLException("Failed to clear framebuffer", "glClear");
   }
 
-  /** Interface to be implemented for rendering callbacks. */
+  
   public static interface Renderer {
-    /**
-     * Called by {@link SampleRender} when the GL render surface is created.
-     *
-     * <p>See {@link GLSurfaceView.Renderer#onSurfaceCreated}.
-     */
+    
     public void onSurfaceCreated(SampleRender render);
 
-    /**
-     * Called by {@link SampleRender} when the GL render surface dimensions are changed.
-     *
-     * <p>See {@link GLSurfaceView.Renderer#onSurfaceChanged}.
-     */
+    
     public void onSurfaceChanged(SampleRender render, int width, int height);
 
-    /**
-     * Called by {@link SampleRender} when a GL frame is to be rendered.
-     *
-     * <p>See {@link GLSurfaceView.Renderer#onDrawFrame}.
-     */
+    
     public void onDrawFrame(SampleRender render);
   }
 
-  /* package-private */
+  
   AssetManager getAssets() {
     return assetManager;
   }

@@ -62,7 +62,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private static final int SELECT_PICTURE_REQUEST_CODE = 200;
 
-    private final List<String> menuItems = Arrays.asList("Espresso", "Lemonade", "Chocolate Muffin");
+    private final List<String> menuItems = Arrays.asList("Coffee", "Pizza", "Chicken Thigh", "Chicken Burger", "Beef Burger", "Cola");
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -236,7 +236,7 @@ public class CameraActivity extends AppCompatActivity {
 
 
     // Add a menu item to the matched items container
-    private void addMenuItemToLayout(String itemName, String price) {
+    private void addMenuItemToLayout(String itemName,String price) {
         View menuItemView = getLayoutInflater().inflate(R.layout.menu_item_layout, matchedItemsContainer, false);
 
         // Set item name, price, and button (currently from local)
@@ -247,11 +247,22 @@ public class CameraActivity extends AppCompatActivity {
         itemNameTextView.setText(itemName);
         priceTextView.setText(price);
 
+        // Handle View AR button click to launch ModelSelectionActivity
+        viewArButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Launching AR for " + itemName, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ModelSelectionActivity.class);
+            intent.putExtra("ITEM_NAME", itemName);
+            intent.putExtra("FROM_PAGE", "Camera");// Pass item name to ModelSelectionActivity
+            startActivity(intent);
+        });
+
+        /*
         // Handle View AR button click if necessary
         viewArButton.setOnClickListener(v -> {
             Toast.makeText(this, "Launching AR for " + itemName, Toast.LENGTH_SHORT).show();
             // Implement AR functionality here
         });
+         */
 
         // Add the menu item view to the container
         matchedItemsContainer.addView(menuItemView);
@@ -267,7 +278,6 @@ public class CameraActivity extends AppCompatActivity {
         }
         return matchedItems;
     }
-
 
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

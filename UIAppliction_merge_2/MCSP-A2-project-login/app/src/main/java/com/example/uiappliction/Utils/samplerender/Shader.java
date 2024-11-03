@@ -1,18 +1,4 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.example.uiappliction.Utils.samplerender;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -30,18 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-/**
- * Represents a GPU shader, the state of its associated uniforms, and some additional draw state.
- */
+
 public class Shader implements Closeable {
   private static final String TAG = Shader.class.getSimpleName();
 
-  /**
-   * A factor to be used in a blend function.
-   *
-   * @see <a
-   *     href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendFunc.xhtml">glBlendFunc</a>
-   */
+  
   public static enum BlendFactor {
     ZERO(GLES30.GL_ZERO),
     ONE(GLES30.GL_ONE),
@@ -58,7 +37,7 @@ public class Shader implements Closeable {
     CONSTANT_ALPHA(GLES30.GL_CONSTANT_ALPHA),
     ONE_MINUS_CONSTANT_ALPHA(GLES30.GL_ONE_MINUS_CONSTANT_ALPHA);
 
-    /* package-private */
+    
     final int glesEnum;
 
     private BlendFactor(int glesEnum) {
@@ -81,12 +60,7 @@ public class Shader implements Closeable {
   private BlendFactor sourceAlphaBlend = BlendFactor.ONE;
   private BlendFactor destAlphaBlend = BlendFactor.ZERO;
 
-  /**
-   * Constructs a {@link Shader} given the shader code.
-   *
-   * @param defines A map of shader precompiler symbols to be defined with the given names and
-   *     values
-   */
+  
   public Shader(
       SampleRender render,
       String vertexShaderCode,
@@ -136,14 +110,7 @@ public class Shader implements Closeable {
     }
   }
 
-  /**
-   * Creates a {@link Shader} from the given asset file names.
-   *
-   * <p>The file contents are interpreted as UTF-8 text.
-   *
-   * @param defines A map of shader precompiler symbols to be defined with the given names and
-   *     values
-   */
+  
   public static Shader createFromAssets(
       SampleRender render,
       String vertexShaderFileName,
@@ -166,45 +133,25 @@ public class Shader implements Closeable {
     }
   }
 
-  /**
-   * Sets depth test state.
-   *
-   * @see <a
-   *     href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glEnable.xhtml">glEnable(GL_DEPTH_TEST)</a>.
-   */
+  
   public Shader setDepthTest(boolean depthTest) {
     this.depthTest = depthTest;
     return this;
   }
 
-  /**
-   * Sets depth write state.
-   *
-   * @see <a
-   *     href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDepthMask.xhtml">glDepthMask</a>.
-   */
+  
   public Shader setDepthWrite(boolean depthWrite) {
     this.depthWrite = depthWrite;
     return this;
   }
 
-  /**
-   * Sets cull face state.
-   *
-   * @see <a
-   *     href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glEnable.xhtml">glEnable(GL_CULL_FACE)</a>.
-   */
+  
   public Shader setCullFace(boolean cullFace) {
     this.cullFace = cullFace;
     return this;
   }
 
-  /**
-   * Sets blending function.
-   *
-   * @see <a
-   *     href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendFunc.xhtml">glBlendFunc</a>
-   */
+  
   public Shader setBlend(BlendFactor sourceBlend, BlendFactor destBlend) {
     this.sourceRgbBlend = sourceBlend;
     this.destRgbBlend = destBlend;
@@ -213,12 +160,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /**
-   * Sets blending functions separately for RGB and alpha channels.
-   *
-   * @see <a
-   *     href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendFuncSeparate.xhtml">glBlendFunc</a>
-   */
+  
   public Shader setBlend(
       BlendFactor sourceRgbBlend,
       BlendFactor destRgbBlend,
@@ -231,7 +173,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a texture uniform. */
+  
   public Shader setTexture(String name, Texture texture) {
     // Special handling for Textures. If replacing an existing texture uniform, reuse the texture
     // unit.
@@ -248,28 +190,28 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code bool} uniform. */
+  
   public Shader setBool(String name, boolean v0) {
     int[] values = {v0 ? 1 : 0};
     uniforms.put(getUniformLocation(name), new UniformInt(values));
     return this;
   }
 
-  /** Sets an {@code int} uniform. */
+  
   public Shader setInt(String name, int v0) {
     int[] values = {v0};
     uniforms.put(getUniformLocation(name), new UniformInt(values));
     return this;
   }
 
-  /** Sets a {@code float} uniform. */
+  
   public Shader setFloat(String name, float v0) {
     float[] values = {v0};
     uniforms.put(getUniformLocation(name), new Uniform1f(values));
     return this;
   }
 
-  /** Sets a {@code vec2} uniform. */
+  
   public Shader setVec2(String name, float[] values) {
     if (values.length != 2) {
       throw new IllegalArgumentException("Value array length must be 2");
@@ -277,7 +219,7 @@ public class Shader implements Closeable {
     uniforms.put(getUniformLocation(name), new Uniform2f(values.clone()));
     return this;
   }
-  /** Sets a {@code vec3} uniform. */
+  
   public Shader setVec3(String name, float[] values) {
     if (values.length != 3) {
       throw new IllegalArgumentException("Value array length must be 3");
@@ -286,7 +228,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code vec4} uniform. */
+  
   public Shader setVec4(String name, float[] values) {
     if (values.length != 4) {
       throw new IllegalArgumentException("Value array length must be 4");
@@ -295,7 +237,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code mat2} uniform. */
+  
   public Shader setMat2(String name, float[] values) {
     if (values.length != 4) {
       throw new IllegalArgumentException("Value array length must be 4 (2x2)");
@@ -304,7 +246,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code mat3} uniform. */
+  
   public Shader setMat3(String name, float[] values) {
     if (values.length != 9) {
       throw new IllegalArgumentException("Value array length must be 9 (3x3)");
@@ -313,7 +255,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code mat4} uniform. */
+  
   public Shader setMat4(String name, float[] values) {
     if (values.length != 16) {
       throw new IllegalArgumentException("Value array length must be 16 (4x4)");
@@ -322,7 +264,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code bool} array uniform. */
+  
   public Shader setBoolArray(String name, boolean[] values) {
     int[] intValues = new int[values.length];
     for (int i = 0; i < values.length; ++i) {
@@ -332,19 +274,19 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets an {@code int} array uniform. */
+  
   public Shader setIntArray(String name, int[] values) {
     uniforms.put(getUniformLocation(name), new UniformInt(values.clone()));
     return this;
   }
 
-  /** Sets a {@code float} array uniform. */
+  
   public Shader setFloatArray(String name, float[] values) {
     uniforms.put(getUniformLocation(name), new Uniform1f(values.clone()));
     return this;
   }
 
-  /** Sets a {@code vec2} array uniform. */
+  
   public Shader setVec2Array(String name, float[] values) {
     if (values.length % 2 != 0) {
       throw new IllegalArgumentException("Value array length must be divisible by 2");
@@ -352,7 +294,7 @@ public class Shader implements Closeable {
     uniforms.put(getUniformLocation(name), new Uniform2f(values.clone()));
     return this;
   }
-  /** Sets a {@code vec3} array uniform. */
+  
   public Shader setVec3Array(String name, float[] values) {
     if (values.length % 3 != 0) {
       throw new IllegalArgumentException("Value array length must be divisible by 3");
@@ -361,7 +303,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code vec4} array uniform. */
+  
   public Shader setVec4Array(String name, float[] values) {
     if (values.length % 4 != 0) {
       throw new IllegalArgumentException("Value array length must be divisible by 4");
@@ -370,7 +312,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code mat2} array uniform. */
+  
   public Shader setMat2Array(String name, float[] values) {
     if (values.length % 4 != 0) {
       throw new IllegalArgumentException("Value array length must be divisible by 4 (2x2)");
@@ -379,7 +321,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code mat3} array uniform. */
+  
   public Shader setMat3Array(String name, float[] values) {
     if (values.length % 9 != 0) {
       throw new IllegalArgumentException("Values array length must be divisible by 9 (3x3)");
@@ -388,7 +330,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /** Sets a {@code mat4} uniform. */
+  
   public Shader setMat4Array(String name, float[] values) {
     if (values.length % 16 != 0) {
       throw new IllegalArgumentException("Value array length must be divisible by 16 (4x4)");
@@ -397,10 +339,7 @@ public class Shader implements Closeable {
     return this;
   }
 
-  /**
-   * Activates the shader. Don't call this directly unless you are doing low level OpenGL code;
-   * instead, prefer {@link SampleRender#draw}.
-   */
+  
   public void lowLevelUse() {
     // Make active shader/set uniforms
     if (programId == 0) {
@@ -562,7 +501,7 @@ public class Shader implements Closeable {
 
     @Override
     public void use(int location) {
-      GLES30.glUniformMatrix2fv(location, values.length / 4, /*transpose=*/ false, values, 0);
+      GLES30.glUniformMatrix2fv(location, values.length / 4,  false, values, 0);
       GLError.maybeThrowGLException("Failed to set shader uniform matrix 2f", "glUniformMatrix2fv");
     }
   }
@@ -576,7 +515,7 @@ public class Shader implements Closeable {
 
     @Override
     public void use(int location) {
-      GLES30.glUniformMatrix3fv(location, values.length / 9, /*transpose=*/ false, values, 0);
+      GLES30.glUniformMatrix3fv(location, values.length / 9,  false, values, 0);
       GLError.maybeThrowGLException("Failed to set shader uniform matrix 3f", "glUniformMatrix3fv");
     }
   }
@@ -590,7 +529,7 @@ public class Shader implements Closeable {
 
     @Override
     public void use(int location) {
-      GLES30.glUniformMatrix4fv(location, values.length / 16, /*transpose=*/ false, values, 0);
+      GLES30.glUniformMatrix4fv(location, values.length / 16,  false, values, 0);
       GLError.maybeThrowGLException("Failed to set shader uniform matrix 4f", "glUniformMatrix4fv");
     }
   }

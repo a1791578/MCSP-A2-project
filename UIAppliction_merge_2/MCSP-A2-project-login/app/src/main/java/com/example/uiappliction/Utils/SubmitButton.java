@@ -20,79 +20,46 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.uiappliction.R;
 
-/**
- * author : Unstoppable & Android 轮子哥
- * github : https://github.com/Someonewow/SubmitButton
- * time   : 2016/12/31
- * desc   : 带提交动画按钮
- */
+
 public final class SubmitButton extends AppCompatButton {
 
-    /**
-     * 无进度
-     */
+    
     private static final int STYLE_LOADING = 0x00;
-    /**
-     * 带进度
-     */
+    
     private static final int STYLE_PROGRESS = 0x01;
 
-    /**
-     * 默认状态
-     */
+    
     private static final int STATE_NONE = 0;
-    /**
-     * 提交状态
-     */
+    
     private static final int STATE_SUBMIT = 1;
-    /**
-     * 加载状态
-     */
+    
     private static final int STATE_LOADING = 2;
-    /**
-     * 结果状态
-     */
+    
     private static final int STATE_RESULT = 3;
 
-    /**
-     * 当前按钮状态
-     */
+    
     private int mButtonState = STATE_NONE;
 
-    /**
-     * 当前进度条样式
-     */
+    
     private final int mProgressStyle;
     private float mCurrentProgress;
 
-    /**
-     * View 宽高
-     */
+    
     private int mViewWidth;
     private int mViewHeight;
 
-    /**
-     * View 最大宽高
-     */
+    
     private int mMaxWidth;
     private int mMaxHeight;
 
-    /**
-     * 画布坐标原点
-     */
+    
     private int mX, mY;
 
-    /**
-     * 进度按钮的颜色
-     */
+    
     private final int mProgressColor;
-    /**
-     * 成功按钮的颜色
-     */
+    
     private final int mSucceedColor;
-    /**
-     * 失败按钮的颜色
-     */
+    
     private final int mErrorColor;
 
     private Paint mBackgroundPaint, mLoadingPaint, mResultPaint;
@@ -109,13 +76,9 @@ public final class SubmitButton extends AppCompatButton {
 
     private ValueAnimator mSubmitAnim, mLoadingAnim, mResultAnim;
 
-    /**
-     * 是否有结果
-     */
+    
     private boolean mDoResult;
-    /**
-     * 是否成功了
-     */
+    
     private boolean mSucceed;
 
     public SubmitButton(Context context) {
@@ -159,9 +122,7 @@ public final class SubmitButton extends AppCompatButton {
         mPathMeasure = new PathMeasure();
     }
 
-    /**
-     * 重置画笔
-     */
+    
     private void resetPaint() {
         mBackgroundPaint.setColor(mProgressColor);
         mBackgroundPaint.setStrokeWidth(5);
@@ -226,9 +187,7 @@ public final class SubmitButton extends AppCompatButton {
         }
     }
 
-    /**
-     * 绘制按钮
-     */
+    
     private void drawButton(Canvas canvas) {
         mButtonPath.reset();
         mCircleLeft.set(-mViewWidth / 2f, -mViewHeight / 2f, -mViewWidth / 2f + mViewHeight, mViewHeight / 2f);
@@ -240,9 +199,7 @@ public final class SubmitButton extends AppCompatButton {
         canvas.drawPath(mButtonPath, mBackgroundPaint);
     }
 
-    /**
-     * 绘制加载转圈
-     */
+    
     private void drawLoading(Canvas canvas) {
         mDstPath.reset();
         mCircleMid.set(-mMaxHeight / 2f, -mMaxHeight / 2f, mMaxHeight / 2f, mMaxHeight / 2f);
@@ -259,9 +216,7 @@ public final class SubmitButton extends AppCompatButton {
         canvas.drawPath(mDstPath, mLoadingPaint);
     }
 
-    /**
-     * 绘制结果按钮
-     */
+    
     private void drawResult(Canvas canvas, boolean isSucceed) {
         if (isSucceed) {
             mResultPath.moveTo(-mViewHeight / 6f, 0);
@@ -276,9 +231,7 @@ public final class SubmitButton extends AppCompatButton {
         canvas.drawPath(mResultPath, mResultPaint);
     }
 
-    /**
-     * 开始提交动画
-     */
+    
     private void startSubmitAnim() {
         mButtonState = STATE_SUBMIT;
         mSubmitAnim = ValueAnimator.ofInt(mMaxWidth, mMaxHeight);
@@ -318,9 +271,7 @@ public final class SubmitButton extends AppCompatButton {
         });
     }
 
-    /**
-     * 开始加载动画
-     */
+    
     private void startLoadingAnim() {
         mButtonState = STATE_LOADING;
         if (mProgressStyle == STYLE_PROGRESS) {
@@ -336,9 +287,7 @@ public final class SubmitButton extends AppCompatButton {
         mLoadingAnim.start();
     }
 
-    /**
-     * 开始结果动画
-     */
+    
     private void startResultAnim() {
         mButtonState = STATE_RESULT;
         if (mLoadingAnim != null) {
@@ -406,40 +355,30 @@ public final class SubmitButton extends AppCompatButton {
         }
     }
 
-    /**
-     * 显示进度
-     */
+    
     public void showProgress() {
         if (mButtonState == STATE_NONE) {
             startSubmitAnim();
         }
     }
 
-    /**
-     * 显示成功
-     */
+    
     public void showSucceed() {
         showResult(true);
     }
 
-    /**
-     * 显示错误
-     */
+    
     public void showError() {
         showResult(false);
     }
 
-    /**
-     * 显示错误之后延迟重置
-     */
+    
     public void showError(long delayMillis) {
         showResult(false);
         postDelayed(this::reset, delayMillis);
     }
 
-    /**
-     * 显示提交结果
-     */
+    
     private void showResult(boolean succeed) {
         if (mButtonState == STATE_NONE || mButtonState == STATE_RESULT || mDoResult) {
             return;
@@ -451,9 +390,7 @@ public final class SubmitButton extends AppCompatButton {
         }
     }
 
-    /**
-     * 重置按钮的状态
-     */
+    
     public void reset() {
         if (mSubmitAnim != null) {
             mSubmitAnim.cancel();
@@ -474,9 +411,7 @@ public final class SubmitButton extends AppCompatButton {
         invalidate();
     }
 
-    /**
-     * 设置按钮进度
-     */
+    
     public void setProgress(@FloatRange(from = 0.0, to = 1.0) float progress) {
         mCurrentProgress = progress;
         if (mProgressStyle == STYLE_PROGRESS && mButtonState == STATE_LOADING) {
@@ -484,9 +419,7 @@ public final class SubmitButton extends AppCompatButton {
         }
     }
 
-    /**
-     * 获取当前主题的强调色
-     */
+    
     private int getAccentColor() {
         TypedValue typedValue = new TypedValue();
         getContext().getTheme().resolveAttribute(androidx.appcompat.R.attr.colorAccent, typedValue, true);

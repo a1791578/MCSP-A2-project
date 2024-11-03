@@ -1,18 +1,4 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.example.uiappliction.Utils.samplerender.arcore;
 
 import android.opengl.Matrix;
@@ -40,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Renders the detected AR planes. */
+
 public class PlaneRenderer {
   private static final String TAG = PlaneRenderer.class.getSimpleName();
 
@@ -102,17 +88,13 @@ public class PlaneRenderer {
 
   private final Map<Plane, Integer> planeIndexMap = new HashMap<>();
 
-  /**
-   * Allocates and initializes OpenGL resources needed by the plane renderer. Must be called during
-   * a {@link SampleRender.Renderer} callback, typically in {@link
-   * SampleRender.Renderer#onSurfaceCreated}.
-   */
+  
   public PlaneRenderer(SampleRender render) throws IOException {
     Texture texture =
         Texture.createFromAsset(
             render, TEXTURE_NAME, Texture.WrapMode.REPEAT, Texture.ColorFormat.LINEAR);
     shader =
-        Shader.createFromAssets(render, VERTEX_SHADER_NAME, FRAGMENT_SHADER_NAME, /*defines=*/ null)
+        Shader.createFromAssets(render, VERTEX_SHADER_NAME, FRAGMENT_SHADER_NAME,  null)
             .setTexture("u_Texture", texture)
             .setVec4("u_GridControl", GRID_CONTROL)
             .setBlend(
@@ -122,13 +104,13 @@ public class PlaneRenderer {
                 BlendFactor.ONE_MINUS_SRC_ALPHA) // ALPHA (dest)
             .setDepthWrite(false);
 
-    indexBufferObject = new IndexBuffer(render, /*entries=*/ null);
-    vertexBufferObject = new VertexBuffer(render, COORDS_PER_VERTEX, /*entries=*/ null);
+    indexBufferObject = new IndexBuffer(render,  null);
+    vertexBufferObject = new VertexBuffer(render, COORDS_PER_VERTEX,  null);
     VertexBuffer[] vertexBuffers = {vertexBufferObject};
     mesh = new Mesh(render, Mesh.PrimitiveMode.TRIANGLE_STRIP, indexBufferObject, vertexBuffers);
   }
 
-  /** Updates the plane model transform matrix and extents. */
+  
   private void updatePlaneParameters(
       float[] planeMatrix, float extentX, float extentZ, FloatBuffer boundary) {
     System.arraycopy(planeMatrix, 0, modelMatrix, 0, 16);
@@ -214,14 +196,7 @@ public class PlaneRenderer {
     }
   }
 
-  /**
-   * Draws the collection of tracked planes, with closer planes hiding more distant ones.
-   *
-   * @param allPlanes The collection of planes to draw.
-   * @param cameraPose The pose of the camera, as returned by {@link Camera#getPose()}
-   * @param cameraProjection The projection matrix, as returned by {@link
-   *     Camera#getProjectionMatrix(float[], int, float, float)}
-   */
+  
   public void drawPlanes(
       SampleRender render, Collection<Plane> allPlanes, Pose cameraPose, float[] cameraProjection) {
     // Planes must be sorted by distance from camera so that we draw closer planes first, and

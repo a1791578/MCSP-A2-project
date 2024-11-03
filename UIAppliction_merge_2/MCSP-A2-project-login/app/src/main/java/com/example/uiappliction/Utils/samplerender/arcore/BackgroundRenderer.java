@@ -1,18 +1,4 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.example.uiappliction.Utils.samplerender.arcore;
 
 import android.media.Image;
@@ -31,11 +17,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 
-/**
- * This class both renders the AR camera background and composes the a scene foreground. The camera
- * background can be rendered as either camera image data or camera depth data. The virtual scene
- * can be composited with or without depth occlusion.
- */
+
 public class BackgroundRenderer {
   private static final String TAG = BackgroundRenderer.class.getSimpleName();
 
@@ -51,11 +33,11 @@ public class BackgroundRenderer {
   static {
     NDC_QUAD_COORDS_BUFFER.put(
         new float[] {
-          /*0:*/ -1f, -1f, /*1:*/ +1f, -1f, /*2:*/ -1f, +1f, /*3:*/ +1f, +1f,
+           -1f, -1f,  +1f, -1f,  -1f, +1f,  +1f, +1f,
         });
     VIRTUAL_SCENE_TEX_COORDS_BUFFER.put(
         new float[] {
-          /*0:*/ 0f, 0f, /*1:*/ 1f, 0f, /*2:*/ 0f, 1f, /*3:*/ 1f, 1f,
+           0f, 0f,  1f, 0f,  0f, 1f,  1f, 1f,
         });
   }
 
@@ -74,45 +56,38 @@ public class BackgroundRenderer {
   private boolean useOcclusion;
   private float aspectRatio;
 
-  /**
-   * Allocates and initializes OpenGL resources needed by the background renderer. Must be called
-   * during a {@link SampleRender.Renderer} callback, typically in {@link
-   * SampleRender.Renderer#onSurfaceCreated()}.
-   */
+  
   public BackgroundRenderer(SampleRender render) {
     cameraColorTexture =
         new Texture(
             render,
             Texture.Target.TEXTURE_EXTERNAL_OES,
             Texture.WrapMode.CLAMP_TO_EDGE,
-            /*useMipmaps=*/ false);
+             false);
     cameraDepthTexture =
         new Texture(
             render,
             Texture.Target.TEXTURE_2D,
             Texture.WrapMode.CLAMP_TO_EDGE,
-            /*useMipmaps=*/ false);
+             false);
 
     // Create a Mesh with three vertex buffers: one for the screen coordinates (normalized device
     // coordinates), one for the camera texture coordinates (to be populated with proper data later
     // before drawing), and one for the virtual scene texture coordinates (unit texture quad)
     VertexBuffer screenCoordsVertexBuffer =
-        new VertexBuffer(render, /* numberOfEntriesPerVertex=*/ 2, NDC_QUAD_COORDS_BUFFER);
+        new VertexBuffer(render,  2, NDC_QUAD_COORDS_BUFFER);
     cameraTexCoordsVertexBuffer =
-        new VertexBuffer(render, /*numberOfEntriesPerVertex=*/ 2, /*entries=*/ null);
+        new VertexBuffer(render,  2,  null);
     VertexBuffer virtualSceneTexCoordsVertexBuffer =
-        new VertexBuffer(render, /* numberOfEntriesPerVertex=*/ 2, VIRTUAL_SCENE_TEX_COORDS_BUFFER);
+        new VertexBuffer(render,  2, VIRTUAL_SCENE_TEX_COORDS_BUFFER);
     VertexBuffer[] vertexBuffers = {
       screenCoordsVertexBuffer, cameraTexCoordsVertexBuffer, virtualSceneTexCoordsVertexBuffer,
     };
     mesh =
-        new Mesh(render, Mesh.PrimitiveMode.TRIANGLE_STRIP, /*indexBuffer=*/ null, vertexBuffers);
+        new Mesh(render, Mesh.PrimitiveMode.TRIANGLE_STRIP,  null, vertexBuffers);
   }
 
-  /**
-   * Sets whether the background camera image should be replaced with a depth visualization instead.
-   * This reloads the corresponding shader code, and must be called on the GL thread.
-   */
+  
   public void setUseDepthVisualization(SampleRender render, boolean useDepthVisualization)
       throws IOException {
     if (backgroundShader != null) {
@@ -135,7 +110,7 @@ public class BackgroundRenderer {
                   render,
                   "shaders/background_show_depth_color_visualization.vert",
                   "shaders/background_show_depth_color_visualization.frag",
-                  /*defines=*/ null)
+                   null)
               .setTexture("u_CameraDepthTexture", cameraDepthTexture)
               .setTexture("u_ColorMap", depthColorPaletteTexture)
               .setDepthTest(false)
@@ -146,17 +121,14 @@ public class BackgroundRenderer {
                   render,
                   "shaders/background_show_camera.vert",
                   "shaders/background_show_camera.frag",
-                  /*defines=*/ null)
+                   null)
               .setTexture("u_CameraColorTexture", cameraColorTexture)
               .setDepthTest(false)
               .setDepthWrite(false);
     }
   }
 
-  /**
-   * Sets whether to use depth for occlusion. This reloads the shader code with new {@code
-   * #define}s, and must be called on the GL thread.
-   */
+  
   public void setUseOcclusion(SampleRender render, boolean useOcclusion) throws IOException {
     if (occlusionShader != null) {
       if (this.useOcclusion == useOcclusion) {
@@ -180,12 +152,7 @@ public class BackgroundRenderer {
     }
   }
 
-  /**
-   * Updates the display geometry. This must be called every frame before calling either of
-   * BackgroundRenderer's draw methods.
-   *
-   * @param frame The current {@code Frame} as returned by {@link Session#update()}.
-   */
+  
   public void updateDisplayGeometry(Frame frame) {
     if (frame.hasDisplayGeometryChanged()) {
       // If display rotation changed (also includes view size change), we need to re-query the UV
@@ -199,7 +166,7 @@ public class BackgroundRenderer {
     }
   }
 
-  /** Update depth texture with Image contents. */
+  
   public void updateCameraDepthTexture(Image image) {
     // SampleRender abstraction leaks here
     GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, cameraDepthTexture.getTextureId());
@@ -219,24 +186,12 @@ public class BackgroundRenderer {
     }
   }
 
-  /**
-   * Draws the AR background image. The image will be drawn such that virtual content rendered with
-   * the matrices provided by {@link com.google.ar.core.Camera#getViewMatrix(float[], int)} and
-   * {@link com.google.ar.core.Camera#getProjectionMatrix(float[], int, float, float)} will
-   * accurately follow static physical objects.
-   */
+  
   public void drawBackground(SampleRender render) {
     render.draw(mesh, backgroundShader);
   }
 
-  /**
-   * Draws the virtual scene. Any objects rendered in the given {@link Framebuffer} will be drawn
-   * given the previously specified {@link OcclusionMode}.
-   *
-   * <p>Virtual content should be rendered using the matrices provided by {@link
-   * com.google.ar.core.Camera#getViewMatrix(float[], int)} and {@link
-   * com.google.ar.core.Camera#getProjectionMatrix(float[], int, float, float)}.
-   */
+  
   public void drawVirtualScene(
       SampleRender render, Framebuffer virtualSceneFramebuffer, float zNear, float zFar) {
     occlusionShader.setTexture(
@@ -250,12 +205,12 @@ public class BackgroundRenderer {
     render.draw(mesh, occlusionShader);
   }
 
-  /** Return the camera color texture generated by this object. */
+  
   public Texture getCameraColorTexture() {
     return cameraColorTexture;
   }
 
-  /** Return the camera depth texture generated by this object. */
+  
   public Texture getCameraDepthTexture() {
     return cameraDepthTexture;
   }

@@ -25,11 +25,11 @@
 
         <Button
             android:layout_marginTop="150dp"
-            android:layout_width="350dp"
-            android:layout_height="50dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:id="@+id/camera_button"
             android:textAllCaps="false"
-            android:text="SCAN THE MENU"
+            android:background="@drawable/img_1"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -38,6 +38,7 @@
             android:gravity="center"
             android:textSize="30dp"
             android:textColor="@color/black"
+            android:layout_marginTop="20dp"
             android:text="Scan the Meanu" />
     </LinearLayout>
 

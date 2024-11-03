@@ -1,18 +1,4 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.example.uiappliction.Utils.samplerender.arcore;
 
 import static java.lang.Math.max;
@@ -37,14 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-/**
- * Filters a provided cubemap into a cubemap lookup texture which is a function of the direction of
- * a reflected ray of light and material roughness, i.e. the LD term of the specular IBL
- * calculation.
- *
- * <p>See https://google.github.io/filament/Filament.md.html#lighting/imagebasedlights for a more
- * detailed explanation.
- */
+
 public class SpecularCubemapFilter implements Closeable {
   private static final String TAG = SpecularCubemapFilter.class.getSimpleName();
 
@@ -62,7 +41,7 @@ public class SpecularCubemapFilter implements Closeable {
   static {
     COORDS_BUFFER.put(
         new float[] {
-          /*0:*/ -1f, -1f, /*1:*/ +1f, -1f, /*2:*/ -1f, +1f, /*3:*/ +1f, +1f,
+           -1f, -1f,  +1f, -1f,  -1f, +1f,  +1f, +1f,
         });
   }
 
@@ -122,7 +101,7 @@ public class SpecularCubemapFilter implements Closeable {
     @Override
     public Iterator<Chunk> iterator() {
       return new Iterator<Chunk>() {
-        private Chunk chunk = new Chunk(/*chunkIndex=*/ 0, maxChunkSize);
+        private Chunk chunk = new Chunk( 0, maxChunkSize);
 
         @Override
         public boolean hasNext() {
@@ -159,18 +138,7 @@ public class SpecularCubemapFilter implements Closeable {
   // [mipmapLevel][attachmentChunk].
   private final int[][] framebuffers;
 
-  /**
-   * Constructs a {@link SpecularCubemapFilter}.
-   *
-   * <p>The provided resolution refers to both the width and height of the input resolution and the
-   * resolution of the highest mipmap level of the filtered cubemap texture.
-   *
-   * <p>Ideally, the cubemap would need to be filtered by computing a function of every sample over
-   * the hemisphere for every texel. Since this is not practical to compute, a limited, discrete
-   * number of importance samples are selected instead. A larger number of importance samples will
-   * generally provide more accurate results, but in the case of ARCore, the cubemap estimations are
-   * already very low resolution, and higher values provide rapidly diminishing returns.
-   */
+  
   public SpecularCubemapFilter(SampleRender render, int resolution, int numberOfImportanceSamples)
       throws IOException {
     this.resolution = resolution;
@@ -194,7 +162,7 @@ public class SpecularCubemapFilter implements Closeable {
           new Mesh(
               render,
               Mesh.PrimitiveMode.TRIANGLE_STRIP,
-              /*indexBuffer=*/ null,
+               null,
               new VertexBuffer[] {coordsBuffer});
     } catch (Throwable t) {
       close();
@@ -224,15 +192,7 @@ public class SpecularCubemapFilter implements Closeable {
     }
   }
 
-  /**
-   * Updates and filters the provided cubemap textures from ARCore.
-   *
-   * <p>This method should be called every frame with the result of {@link
-   * com.google.ar.core.LightEstimate.acquireEnvironmentalHdrCubeMap()} to update the filtered
-   * cubemap texture, accessible via {@link getFilteredCubemapTexture()}.
-   *
-   * <p>The given {@link Image}s will be closed by this method, even if an exception occurs.
-   */
+  
   public void update(Image[] images) {
     try {
       GLES30.glBindTexture(GLES30.GL_TEXTURE_CUBE_MAP, radianceCubemap.getTextureId());
@@ -264,11 +224,11 @@ public class SpecularCubemapFilter implements Closeable {
 
         GLES30.glTexImage2D(
             GLES30.GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-            /*level=*/ 0,
+             0,
             GLES30.GL_RGBA16F,
-            /*width=*/ resolution,
-            /*height=*/ resolution,
-            /*border=*/ 0,
+             resolution,
+             resolution,
+             0,
             GLES30.GL_RGBA,
             GLES30.GL_HALF_FLOAT,
             image.getPlanes()[0].getBuffer());
@@ -299,15 +259,12 @@ public class SpecularCubemapFilter implements Closeable {
     }
   }
 
-  /** Returns the number of mipmap levels in the filtered cubemap texture. */
+  
   public int getNumberOfMipmapLevels() {
     return numberOfMipmapLevels;
   }
 
-  /**
-   * Returns the filtered cubemap texture whose contents are updated with each call to {@link
-   * #update(Image[])}.
-   */
+  
   public Texture getFilteredCubemapTexture() {
     return ldCubemap;
   }
@@ -323,12 +280,12 @@ public class SpecularCubemapFilter implements Closeable {
             GLES30.GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
             level,
             GLES30.GL_RGB16F,
-            /*width=*/ mipmapResolution,
-            /*height=*/ mipmapResolution,
-            /*border=*/ 0,
+             mipmapResolution,
+             mipmapResolution,
+             0,
             GLES30.GL_RGB,
             GLES30.GL_HALF_FLOAT,
-            /*data=*/ null);
+             null);
         GLError.maybeThrowGLException("Could not initialize LD cubemap mipmap", "glTexImage2D");
       }
     }
@@ -410,10 +367,7 @@ public class SpecularCubemapFilter implements Closeable {
     return framebuffers;
   }
 
-  /**
-   * Generate a cache of importance sampling terms in tangent space, indexed by {@code
-   * [roughnessLevel-1][sampleIndex]}.
-   */
+  
   private ImportanceSampleCacheEntry[][] generateImportanceSampleCaches() {
     ImportanceSampleCacheEntry[][] result =
         new ImportanceSampleCacheEntry[numberOfMipmapLevels - 1][];

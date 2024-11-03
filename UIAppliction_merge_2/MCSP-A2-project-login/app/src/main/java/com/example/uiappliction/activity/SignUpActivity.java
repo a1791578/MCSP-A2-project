@@ -12,9 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.uiappliction.Database.PersonDao;
-import com.example.uiappliction.Database.PersonDatabase;
-import com.example.uiappliction.Entity.Person;
 import com.example.uiappliction.R;
 import com.example.uiappliction.Utils.BaseDialog;
 import com.example.uiappliction.Utils.SubmitButton;
@@ -22,12 +19,7 @@ import com.example.uiappliction.Utils.SwitchButton;
 import com.example.uiappliction.action.HandlerAction;
 import com.hjq.xtoast.XToast;
 
-/**
- * @author Anduin9527
- * @Type SignUpActivity
- * @Desc 注册界面
- * @date 2022/10/9 20:09
- */
+
 public class SignUpActivity extends AppCompatActivity
         implements HandlerAction {
     EditText mUsername, mPhoneNumber;
@@ -38,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //去掉标题栏
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -52,33 +44,29 @@ public class SignUpActivity extends AppCompatActivity
 
         Intent navigateToLogin = new Intent(this, LoginActivity.class);
 
-        //设置电话号码输入框只能输入数字
         mPhoneNumber.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
         final int[] isFemale = {0};
-        //获取数据库
-        PersonDatabase personDatabase = PersonDatabase.getDatabase(this);
-        PersonDao personDao = personDatabase.getPersonDao();
-        //添加男女选择监听器
+
+
         mGender.setOnClickListener(v -> {
             if (mGender.isChecked())
                 isFemale[0] = 1;
             else
                 isFemale[0] = 0;
         });
-        //注册按钮监听器
+
         findViewById(R.id.btn_signup).setOnClickListener(v -> {
             mSignUpButton.showProgress();
             String username = this.mUsername.getText().toString();
 //            String password = this.mPassword.getText().toString();
             String phoneNumber = this.mPhoneNumber.getText().toString();
-            //判断是否为空
+
             if (checkEmpty(username, phoneNumber)) {
 
                 mSignUpButton.showSucceed();
 //                                    Toast.makeText(SignUpActivity.this, getRString(R.string.register_success), Toast.LENGTH_SHORT).show();
-                //使用HandlerAction接口的PostDelayed方法实现延时跳转
                 postDelayed(() -> {
-                    //构建Bundle对象传递person
+
                     Bundle bundle = new Bundle();
                     navigateToLogin.putExtras(bundle);
                     startActivity(navigateToLogin);
@@ -88,37 +76,14 @@ public class SignUpActivity extends AppCompatActivity
             }
         });
 
-        //点击到img则收起键盘
         findViewById(R.id.imageView_bg).setOnClickListener(v -> {
-            //检测是否有焦点
             if (mUsername.isFocused()) {
-                //清除焦点
                 mUsername.clearFocus();
             }
-            //收起键盘
             hideKeyboard(this);
         });
     }
 
-    private boolean checkDataBase(String username, String password, String phoneNumber, PersonDao personDao) {
-        //查询数据库
-        if (personDao.checkUsername(username) != null) {
-            newErrorXToast(R.string.register_username_exist);
-            mSignUpButton.showError(2000);
-        } else if (personDao.checkPhoneNumber(Long.parseLong(phoneNumber)) != null) {
-            newErrorXToast(R.string.register_phone_exist);
-            mSignUpButton.showError(2000);
-        } else if (phoneNumber.length() != 11) {
-            newErrorXToast(R.string.register_phone_error);
-            mSignUpButton.showError(2000);
-        } else if (password.length() < 6) {
-            newErrorXToast(R.string.register_password_less);
-            mSignUpButton.showError(2000);
-        } else {
-            return true;
-        }
-        return false;
-    }
 
     private boolean checkEmpty(String username, String phoneNumber) {
         if (username.isEmpty()) {
@@ -143,11 +108,8 @@ public class SignUpActivity extends AppCompatActivity
                 .setDuration(1000)
                 .setImageDrawable(android.R.id.icon, R.drawable.icon_error)
                 .setText(getRString(id))
-                //设置动画效果
                 .setAnimStyle(R.style.IOSAnimStyle)
-                // 设置外层是否能被触摸
                 .setOutsideTouchable(false)
-                // 设置窗口背景阴影强度
                 .setBackgroundDimAmount(0.5f)
                 .show();
     }

@@ -23,12 +23,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.uiappliction.R;
 
-/**
- * author : Android 轮子哥
- * github : https://github.com/getActivity/AndroidProject
- * time   : 2019/02/20
- * desc   : 高仿 ios 开关按钮
- */
+
 public final class SwitchButton extends View {
 
     private static final int STATE_SWITCH_OFF = 1;
@@ -45,58 +40,34 @@ public final class SwitchButton extends View {
     private float mAnim1, mAnim2;
     private RadialGradient mShadowGradient;
 
-    /**
-     * 按钮宽高形状比率(0,1] 不推荐大幅度调整
-     */
+    
     protected final float mAspectRatio = 0.68f;
-    /**
-     * (0,1]
-     */
+    
     protected final float mAnimationSpeed = 0.1f;
 
-    /**
-     * 上一个选中状态
-     */
+    
     private int mLastCheckedState;
-    /**
-     * 当前的选中状态
-     */
+    
     private int mCheckedState;
 
     private boolean mCanVisibleDrawing = false;
 
-    /**
-     * 是否显示按钮阴影
-     */
+    
     protected boolean mShadow;
-    /**
-     * 是否选中
-     */
+    
     protected boolean mChecked;
 
-    /**
-     * 开启状态背景色
-     */
+    
     protected int mAccentColor = 0xffff5edc;
-    /**
-     * 开启状态按钮描边色
-     */
+    
     protected int mPrimaryDarkColor = 0xFF3AC652;
-    /**
-     * 关闭状态描边色
-     */
+    
     protected int mOffColor = 0xFF5edcff;
-    /**
-     * 关闭状态按钮描边色
-     */
+    
     protected int mOffDarkColor = 0xFFBFBFBF;
-    /**
-     * 按钮阴影色
-     */
+    
     protected int mShadowColor = 0xFF333333;
-    /**
-     * 监听器
-     */
+    
     @Nullable
     private OnCheckedChangeListener mListener;
 
@@ -450,32 +421,24 @@ public final class SwitchButton extends View {
         invalidate();
     }
 
-    /**
-     * 设置按钮阴影开关
-     */
+    
     public void setShadow(boolean shadow) {
         mShadow = shadow;
         invalidate();
     }
 
-    /**
-     * 当前状态是否选中
-     */
+    
     public boolean isChecked() {
         return mChecked;
     }
 
-    /**
-     * 设置选择状态（默认会回调监听器）
-     */
+    
     public void setChecked(boolean checked) {
         // 回调监听器
         setChecked(checked, true);
     }
 
-    /**
-     * 设置选择状态
-     */
+    
     public void setChecked(boolean checked, boolean callback) {
         int newState = checked ? STATE_SWITCH_ON : STATE_SWITCH_OFF;
         if (newState == mCheckedState) {
@@ -501,29 +464,18 @@ public final class SwitchButton extends View {
         }
     }
 
-    /**
-     * 设置选中状态改变监听
-     */
+    
     public void setOnCheckedChangeListener(@Nullable OnCheckedChangeListener listener) {
         mListener = listener;
     }
 
-    /**
-     * 选中监听器
-     */
+    
     public interface OnCheckedChangeListener {
-        /**
-         * 回调监听
-         *
-         * @param button  切换按钮
-         * @param checked 是否选中
-         */
+        
         void onCheckedChanged(SwitchButton button, boolean checked);
     }
 
-    /**
-     * 保存开关状态
-     */
+    
     private static final class SavedState extends BaseSavedState {
 
         private boolean checked;
@@ -543,9 +495,7 @@ public final class SwitchButton extends View {
             out.writeInt(checked ? 1 : 0);
         }
 
-        /**
-         * fixed by Night99 https://github.com/g19980115
-         */
+        
         @Override
         public int describeContents() {
             return 0;

@@ -13,36 +13,31 @@ import androidx.annotation.RequiresApi;
 
 import com.example.uiappliction.R;
 
-/**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2018/12/2
- *    desc   : 密码遮挡自定义控件
- */
+
 public final class PasswordView extends View {
 
     private final Paint mPaint;
     private final Path mPath;
     private final Paint mPointPaint;
 
-    /** 单个密码框的宽度 */
+    
     private final int mItemWidth;
-    /** 单个密码框的高度 */
+    
     private final int mItemHeight;
 
-    /** 中心黑点的半径大小 */
+    
     private static final int POINT_RADIUS = 15;
 
-    /** 中心黑点的颜色 */
+    
     private static final int POINT_COLOR = 0xFF666666;
 
-    /** 密码框边界线的颜色值 */
+    
     private static final int STROKE_COLOR = 0xFFECECEC;
 
-    /** 密码总个数 */
+    
     public static final int PASSWORD_COUNT = 6;
 
-    /** 已经输入的密码个数，也就是需要显示的小黑点个数 */
+    
     private int mCurrentIndex = 0;
 
     public PasswordView(Context context) {
@@ -130,9 +125,7 @@ public final class PasswordView extends View {
         }
     }
 
-    /**
-     * 改变密码提示小黑点的个数
-     */
+    
     public void setPassWordLength(int index) {
         mCurrentIndex = index;
         invalidate();

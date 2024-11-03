@@ -1,18 +1,4 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.example.uiappliction.Utils.samplerender;
 
 import android.opengl.GLES30;
@@ -27,21 +13,11 @@ import java.io.InputStream;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-/**
- * A collection of vertices, faces, and other attributes that define how to render a 3D object.
- *
- * <p>To render the mesh, use {@link SampleRender#draw()}.
- */
+
 public class Mesh implements Closeable {
   private static final String TAG = Mesh.class.getSimpleName();
 
-  /**
-   * The kind of primitive to render.
-   *
-   * <p>This determines how the data in {@link VertexBuffer}s are interpreted. See <a
-   * href="https://www.khronos.org/opengl/wiki/Primitive">here</a> for more on how primitives
-   * behave.
-   */
+  
   public enum PrimitiveMode {
     POINTS(GLES30.GL_POINTS),
     LINE_STRIP(GLES30.GL_LINE_STRIP),
@@ -51,7 +27,7 @@ public class Mesh implements Closeable {
     TRIANGLE_FAN(GLES30.GL_TRIANGLE_FAN),
     TRIANGLES(GLES30.GL_TRIANGLES);
 
-    /* package-private */
+    
     final int glesEnum;
 
     private PrimitiveMode(int glesEnum) {
@@ -68,18 +44,7 @@ public class Mesh implements Closeable {
   private float[] minBounds = {Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE};
   private float[] maxBounds = {Float.MIN_VALUE, Float.MIN_VALUE, Float.MIN_VALUE};
 
-  /**
-   * Construct a {@link Mesh}.
-   *
-   * <p>The data in the given {@link IndexBuffer} and {@link VertexBuffer}s does not need to be
-   * finalized; they may be freely changed throughout the lifetime of a {@link Mesh} using their
-   * respective {@code set()} methods.
-   *
-   * <p>The ordering of the {@code vertexBuffers} is significant. Their array indices will
-   * correspond to their attribute locations, which must be taken into account in shader code. The
-   * <a href="https://www.khronos.org/opengl/wiki/Layout_Qualifier_(GLSL)">layout qualifier</a> must
-   * be used in the vertex shader code to explicitly associate attributes with these indices.
-   */
+  
   public Mesh(
       SampleRender render,
       PrimitiveMode primitiveMode,
@@ -124,21 +89,15 @@ public class Mesh implements Closeable {
     }
   }
 
-  /**
-   * Constructs a {@link Mesh} from the given Wavefront OBJ file.
-   *
-   * <p>The {@link Mesh} will be constructed with three attributes, indexed in the order of local
-   * coordinates (location 0, vec3), texture coordinates (location 1, vec2), and vertex normals
-   * (location 2, vec3).
-   */
+  
   public static Mesh createFromAsset(SampleRender render, String assetFileName) throws IOException {
     try (InputStream inputStream = render.getAssets().open(assetFileName)) {
       Obj obj = ObjUtils.convertToRenderable(ObjReader.read(inputStream));
 
       // Obtain the data from the OBJ, as direct buffers:
-      IntBuffer vertexIndices = ObjData.getFaceVertexIndices(obj, /*numVerticesPerFace=*/ 3);
+      IntBuffer vertexIndices = ObjData.getFaceVertexIndices(obj,  3);
       FloatBuffer localCoordinates = ObjData.getVertices(obj);
-      FloatBuffer textureCoordinates = ObjData.getTexCoords(obj, /*dimensions=*/ 2);
+      FloatBuffer textureCoordinates = ObjData.getTexCoords(obj,  2);
       FloatBuffer normals = ObjData.getNormals(obj);
 
       VertexBuffer[] vertexBuffers = {
@@ -162,10 +121,7 @@ public class Mesh implements Closeable {
     }
   }
 
-  /**
-   * Draws the mesh. Don't call this directly unless you are doing low level OpenGL code; instead,
-   * prefer {@link SampleRender#draw}.
-   */
+  
   public void lowLevelDraw() {
     if (vertexArrayId[0] == 0) {
       throw new IllegalStateException("Tried to draw a freed Mesh");

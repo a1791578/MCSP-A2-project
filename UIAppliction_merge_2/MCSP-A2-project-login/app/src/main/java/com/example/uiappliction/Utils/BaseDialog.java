@@ -49,12 +49,6 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * author : Android 轮子哥
- * github : https://github.com/getActivity/AndroidProject
- * time   : 2018/11/24
- * desc   : Dialog 技术基类
- */
 public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         ActivityAction, ResourcesAction, HandlerAction, ClickAction, AnimAction, KeyboardAction,
         DialogInterface.OnShowListener, DialogInterface.OnCancelListener, DialogInterface.OnDismissListener {
@@ -77,9 +71,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         super(context, themeResId);
     }
 
-    /**
-     * 获取 Dialog 的根布局
-     */
     public View getContentView() {
         View contentView = findViewById(Window.ID_ANDROID_CONTENT);
         if (contentView instanceof ViewGroup &&
@@ -89,9 +80,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         return contentView;
     }
 
-    /**
-     * 设置 Dialog 宽度
-     */
     public void setWidth(int width) {
         Window window = getWindow();
         if (window == null) {
@@ -102,9 +90,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         window.setAttributes(params);
     }
 
-    /**
-     * 设置 Dialog 高度
-     */
     public void setHeight(int height) {
         Window window = getWindow();
         if (window == null) {
@@ -115,9 +100,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         window.setAttributes(params);
     }
 
-    /**
-     * 设置水平偏移
-     */
     public void setXOffset(int offset) {
         Window window = getWindow();
         if (window == null) {
@@ -128,9 +110,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         window.setAttributes(params);
     }
 
-    /**
-     * 设置垂直偏移
-     */
     public void setYOffset(int offset) {
         Window window = getWindow();
         if (window == null) {
@@ -141,9 +120,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         window.setAttributes(params);
     }
 
-    /**
-     * 获取 Dialog 重心
-     */
     public int getGravity() {
         Window window = getWindow();
         if (window == null) {
@@ -153,9 +129,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         return params.gravity;
     }
 
-    /**
-     * 设置 Dialog 重心
-     */
     public void setGravity(int gravity) {
         Window window = getWindow();
         if (window == null) {
@@ -164,9 +137,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         window.setGravity(gravity);
     }
 
-    /**
-     * 设置 Dialog 的动画
-     */
     public void setWindowAnimations(@StyleRes int id) {
         Window window = getWindow();
         if (window == null) {
@@ -175,9 +145,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         window.setWindowAnimations(id);
     }
 
-    /**
-     * 获取 Dialog 的动画
-     */
     public int getWindowAnimations() {
         Window window = getWindow();
         if (window == null) {
@@ -186,9 +153,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         return window.getAttributes().windowAnimations;
     }
 
-    /**
-     * 设置背景遮盖层开关
-     */
     public void setBackgroundDimEnabled(boolean enabled) {
         Window window = getWindow();
         if (window == null) {
@@ -201,9 +165,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * 设置背景遮盖层的透明度（前提条件是背景遮盖层开关必须是为开启状态）
-     */
     public void setBackgroundDimAmount(@FloatRange(from = 0.0, to = 1.0) float dimAmount) {
         Window window = getWindow();
         if (window == null) {
@@ -222,18 +183,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         super.dismiss();
     }
 
-//    @NonNull
-//    @Override
-//    final public Lifecycle getLifecycle() {
-//        return mLifecycle;
-//    }
 
-    /**
-     * 设置一个显示监听器
-     *
-     * @param listener 显示监听器对象
-     * @deprecated 请使用 {@link #addOnShowListener(OnShowListener)}}
-     */
     @Deprecated
     @Override
     public void setOnShowListener(@Nullable DialogInterface.OnShowListener listener) {
@@ -243,12 +193,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         addOnShowListener(new ShowListenerWrapper(listener));
     }
 
-    /**
-     * 设置一个取消监听器
-     *
-     * @param listener 取消监听器对象
-     * @deprecated 请使用 {@link #addOnCancelListener(OnCancelListener)}
-     */
     @Deprecated
     @Override
     public void setOnCancelListener(@Nullable DialogInterface.OnCancelListener listener) {
@@ -258,12 +202,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         addOnCancelListener(new CancelListenerWrapper(listener));
     }
 
-    /**
-     * 设置一个销毁监听器
-     *
-     * @param listener 销毁监听器对象
-     * @deprecated 请使用 {@link #addOnDismissListener(OnDismissListener)}
-     */
     @Deprecated
     @Override
     public void setOnDismissListener(@Nullable DialogInterface.OnDismissListener listener) {
@@ -273,12 +211,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         addOnDismissListener(new DismissListenerWrapper(listener));
     }
 
-    /**
-     * 设置一个按键监听器
-     *
-     * @param listener 按键监听器对象
-     * @deprecated 请使用 {@link #setOnKeyListener(OnKeyListener)}
-     */
     @Deprecated
     @Override
     public void setOnKeyListener(@Nullable DialogInterface.OnKeyListener listener) {
@@ -289,11 +221,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         super.setOnKeyListener(new KeyListenerWrapper(listener));
     }
 
-    /**
-     * 添加一个显示监听器
-     *
-     * @param listener 监听器对象
-     */
     public void addOnShowListener(@Nullable OnShowListener listener) {
         if (mShowListeners == null) {
             mShowListeners = new ArrayList<>();
@@ -302,11 +229,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         mShowListeners.add(listener);
     }
 
-    /**
-     * 添加一个取消监听器
-     *
-     * @param listener 监听器对象
-     */
+
     public void addOnCancelListener(@Nullable OnCancelListener listener) {
         if (mCancelListeners == null) {
             mCancelListeners = new ArrayList<>();
@@ -315,11 +238,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         mCancelListeners.add(listener);
     }
 
-    /**
-     * 添加一个销毁监听器
-     *
-     * @param listener 监听器对象
-     */
     public void addOnDismissListener(@Nullable OnDismissListener listener) {
         if (mDismissListeners == null) {
             mDismissListeners = new ArrayList<>();
@@ -328,11 +246,6 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         mDismissListeners.add(listener);
     }
 
-    /**
-     * 移除一个显示监听器
-     *
-     * @param listener 监听器对象
-     */
     public void removeOnShowListener(@Nullable OnShowListener listener) {
         if (mShowListeners == null) {
             return;
@@ -340,23 +253,12 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         mShowListeners.remove(listener);
     }
 
-    /**
-     * 移除一个取消监听器
-     *
-     * @param listener 监听器对象
-     */
     public void removeOnCancelListener(@Nullable OnCancelListener listener) {
         if (mCancelListeners == null) {
             return;
         }
         mCancelListeners.remove(listener);
     }
-
-    /**
-     * 移除一个销毁监听器
-     *
-     * @param listener 监听器对象
-     */
     public void removeOnDismissListener(@Nullable OnDismissListener listener) {
         if (mDismissListeners == null) {
             return;
@@ -364,33 +266,21 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         mDismissListeners.remove(listener);
     }
 
-    /**
-     * 设置显示监听器集合
-     */
     private void setOnShowListeners(@Nullable List<OnShowListener> listeners) {
         super.setOnShowListener(mListeners);
         mShowListeners = listeners;
     }
 
-    /**
-     * 设置取消监听器集合
-     */
     private void setOnCancelListeners(@Nullable List<OnCancelListener> listeners) {
         super.setOnCancelListener(mListeners);
         mCancelListeners = listeners;
     }
 
-    /**
-     * 设置销毁监听器集合
-     */
     private void setOnDismissListeners(@Nullable List<OnDismissListener> listeners) {
         super.setOnDismissListener(mListeners);
         mDismissListeners = listeners;
     }
 
-    /**
-     * {@link DialogInterface.OnShowListener}
-     */
     @Override
     public void onShow(DialogInterface dialog) {
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);
@@ -404,9 +294,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * {@link DialogInterface.OnCancelListener}
-     */
+    
     @Override
     public void onCancel(DialogInterface dialog) {
         if (mCancelListeners == null) {
@@ -418,9 +306,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * {@link DialogInterface.OnDismissListener}
-     */
+    
     @Override
     public void onDismiss(DialogInterface dialog) {
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
@@ -456,93 +342,40 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
     public static class Builder<B extends Builder<?>> implements
             ActivityAction, ResourcesAction, ClickAction, KeyboardAction {
 
-        /**
-         * Activity 对象
-         */
         private final Activity mActivity;
-        /**
-         * Context 对象
-         */
         private final Context mContext;
-        /**
-         * Dialog 对象
-         */
         private BaseDialog mDialog;
-        /**
-         * Dialog 布局
-         */
         private View mContentView;
 
-        /**
-         * 主题样式
-         */
         private int mThemeId = R.style.BaseDialogTheme;
-        /**
-         * 动画样式
-         */
         private int mAnimStyle = BaseDialog.ANIM_DEFAULT;
 
-        /**
-         * 宽度和高度
-         */
         private int mWidth = WindowManager.LayoutParams.WRAP_CONTENT;
         private int mHeight = WindowManager.LayoutParams.WRAP_CONTENT;
 
-        /**
-         * 重心位置
-         */
         private int mGravity = Gravity.NO_GRAVITY;
-        /**
-         * 水平偏移
-         */
         private int mXOffset;
-        /**
-         * 垂直偏移
-         */
         private int mYOffset;
-
-        /**
-         * 是否能够被取消
-         */
         private boolean mCancelable = true;
-        /**
-         * 点击空白是否能够取消  前提是这个对话框可以被取消
-         */
         private boolean mCanceledOnTouchOutside = true;
 
-        /**
-         * 背景遮盖层开关
-         */
+        
         private boolean mBackgroundDimEnabled = true;
-        /**
-         * 背景遮盖层透明度
-         */
+        
         private float mBackgroundDimAmount = 0.5f;
 
-        /**
-         * Dialog 创建监听
-         */
+        
         private OnCreateListener mCreateListener;
-        /**
-         * Dialog 显示监听
-         */
+        
         private final List<OnShowListener> mShowListeners = new ArrayList<>();
-        /**
-         * Dialog 取消监听
-         */
+        
         private final List<OnCancelListener> mCancelListeners = new ArrayList<>();
-        /**
-         * Dialog 销毁监听
-         */
+        
         private final List<OnDismissListener> mDismissListeners = new ArrayList<>();
-        /**
-         * Dialog 按键监听
-         */
+        
         private OnKeyListener mKeyListener;
 
-        /**
-         * 点击事件集合
-         */
+        
         private SparseArray<OnClickListener<?>> mClickArray;
 
         public Builder(Activity activity) {
@@ -554,9 +387,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             mActivity = getActivity();
         }
 
-        /**
-         * 设置布局
-         */
+        
         public B setContentView(@LayoutRes int id) {
             // 这里解释一下，为什么要传 new FrameLayout，因为如果不传的话，XML 的根布局获取到的 LayoutParams 对象会为空，也就会导致宽高参数解析不出来
             return setContentView(LayoutInflater.from(mContext).inflate(id, new FrameLayout(mContext), false));
@@ -605,9 +436,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置主题 id
-         */
+        
         public B setThemeStyle(@StyleRes int id) {
             mThemeId = id;
             if (isCreated()) {
@@ -617,9 +446,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置动画，已经封装好几种样式，具体可见{@link AnimAction}类
-         */
+        
         public B setAnimStyle(@StyleRes int id) {
             mAnimStyle = id;
             if (isCreated()) {
@@ -628,9 +455,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置宽度
-         */
+        
         public B setWidth(int width) {
             mWidth = width;
             if (isCreated()) {
@@ -650,9 +475,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置高度
-         */
+        
         public B setHeight(int height) {
             mHeight = height;
             if (isCreated()) {
@@ -672,9 +495,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置重心位置
-         */
+        
         public B setGravity(int gravity) {
             // 适配布局反方向
             mGravity = Gravity.getAbsoluteGravity(gravity, getResources().getConfiguration().getLayoutDirection());
@@ -684,9 +505,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置水平偏移
-         */
+        
         public B setXOffset(int offset) {
             mXOffset = offset;
             if (isCreated()) {
@@ -695,9 +514,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置垂直偏移
-         */
+        
         public B setYOffset(int offset) {
             mYOffset = offset;
             if (isCreated()) {
@@ -706,9 +523,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 是否可以取消
-         */
+        
         public B setCancelable(boolean cancelable) {
             mCancelable = cancelable;
             if (isCreated()) {
@@ -717,9 +532,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 是否可以通过点击空白区域取消
-         */
+        
         public B setCanceledOnTouchOutside(boolean cancel) {
             mCanceledOnTouchOutside = cancel;
             if (isCreated() && mCancelable) {
@@ -728,9 +541,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置背景遮盖层开关
-         */
+        
         public B setBackgroundDimEnabled(boolean enabled) {
             mBackgroundDimEnabled = enabled;
             if (isCreated()) {
@@ -739,9 +550,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置背景遮盖层的透明度（前提条件是背景遮盖层开关必须是为开启状态）
-         */
+        
         public B setBackgroundDimAmount(@FloatRange(from = 0.0, to = 1.0) float dimAmount) {
             mBackgroundDimAmount = dimAmount;
             if (isCreated()) {
@@ -750,41 +559,31 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置创建监听
-         */
+        
         public B setOnCreateListener(@NonNull OnCreateListener listener) {
             mCreateListener = listener;
             return (B) this;
         }
 
-        /**
-         * 添加显示监听
-         */
+        
         public B addOnShowListener(@NonNull OnShowListener listener) {
             mShowListeners.add(listener);
             return (B) this;
         }
 
-        /**
-         * 添加取消监听
-         */
+        
         public B addOnCancelListener(@NonNull OnCancelListener listener) {
             mCancelListeners.add(listener);
             return (B) this;
         }
 
-        /**
-         * 添加销毁监听
-         */
+        
         public B addOnDismissListener(@NonNull OnDismissListener listener) {
             mDismissListeners.add(listener);
             return (B) this;
         }
 
-        /**
-         * 设置按键监听
-         */
+        
         public B setOnKeyListener(@NonNull OnKeyListener listener) {
             mKeyListener = listener;
             if (isCreated()) {
@@ -793,9 +592,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置文本
-         */
+        
         public B setText(@IdRes int viewId, @StringRes int stringId) {
             return setText(viewId, getString(stringId));
         }
@@ -805,17 +602,13 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置文本颜色
-         */
+        
         public B setTextColor(@IdRes int id, @ColorInt int color) {
             ((TextView) findViewById(id)).setTextColor(color);
             return (B) this;
         }
 
-        /**
-         * 设置提示
-         */
+        
         public B setHint(@IdRes int viewId, @StringRes int stringId) {
             return setHint(viewId, getString(stringId));
         }
@@ -825,17 +618,13 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置可见状态
-         */
+        
         public B setVisibility(@IdRes int id, int visibility) {
             findViewById(id).setVisibility(visibility);
             return (B) this;
         }
 
-        /**
-         * 设置背景
-         */
+        
         public B setBackground(@IdRes int viewId, @DrawableRes int drawableId) {
             return setBackground(viewId, ContextCompat.getDrawable(mContext, drawableId));
         }
@@ -845,9 +634,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置图片
-         */
+        
         public B setImageDrawable(@IdRes int viewId, @DrawableRes int drawableId) {
             return setBackground(viewId, ContextCompat.getDrawable(mContext, drawableId));
         }
@@ -857,9 +644,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 设置点击事件
-         */
+        
         public B setOnClickListener(@IdRes int id, @NonNull OnClickListener<?> listener) {
             if (mClickArray == null) {
                 mClickArray = new SparseArray<>();
@@ -875,9 +660,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return (B) this;
         }
 
-        /**
-         * 创建
-         */
+        
         @SuppressLint("RtlHardcoded")
         public BaseDialog create() {
             // 判断布局是否为空
@@ -965,9 +748,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return mDialog;
         }
 
-        /**
-         * 显示
-         */
+        
         public void show() {
             if (mActivity == null || mActivity.isFinishing() || mActivity.isDestroyed()) {
                 return;
@@ -984,9 +765,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             mDialog.show();
         }
 
-        /**
-         * 销毁当前 Dialog
-         */
+        
         public void dismiss() {
             if (mActivity == null || mActivity.isFinishing() || mActivity.isDestroyed()) {
                 return;
@@ -1004,31 +783,23 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return mContext;
         }
 
-        /**
-         * 当前 Dialog 是否创建了
-         */
+        
         public boolean isCreated() {
             return mDialog != null;
         }
 
-        /**
-         * 当前 Dialog 是否显示了
-         */
+        
         public boolean isShowing() {
             return isCreated() && mDialog.isShowing();
         }
 
-        /**
-         * 创建 Dialog 对象（子类可以重写此方法来改变 Dialog 类型）
-         */
+        
         @NonNull
         protected BaseDialog createDialog(Context context, @StyleRes int themeId) {
             return new BaseDialog(context, themeId);
         }
 
-        /**
-         * 延迟执行
-         */
+        
         public final void post(Runnable runnable) {
             if (isShowing()) {
                 mDialog.post(runnable);
@@ -1037,9 +808,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             }
         }
 
-        /**
-         * 延迟一段时间执行
-         */
+        
         public final void postDelayed(Runnable runnable, long delayMillis) {
             if (isShowing()) {
                 mDialog.postDelayed(runnable, delayMillis);
@@ -1048,9 +817,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             }
         }
 
-        /**
-         * 在指定的时间执行
-         */
+        
         public final void postAtTime(Runnable runnable, long uptimeMillis) {
             if (isShowing()) {
                 mDialog.postAtTime(runnable, uptimeMillis);
@@ -1059,16 +826,12 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             }
         }
 
-        /**
-         * 获取 Dialog 的根布局
-         */
+        
         public View getContentView() {
             return mContentView;
         }
 
-        /**
-         * 根据 id 查找 View
-         */
+        
         @Override
         public <V extends View> V findViewById(@IdRes int id) {
             if (mContentView == null) {
@@ -1078,17 +841,13 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             return mContentView.findViewById(id);
         }
 
-        /**
-         * 获取当前 Dialog 对象
-         */
+        
         public BaseDialog getDialog() {
             return mDialog;
         }
     }
 
-    /**
-     * Dialog 生命周期绑定
-     */
+    
     private static final class DialogLifecycle implements
             Application.ActivityLifecycleCallbacks,
             OnShowListener,
@@ -1101,9 +860,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         private BaseDialog mDialog;
         private Activity mActivity;
 
-        /**
-         * Dialog 动画样式（避免 Dialog 从后台返回到前台后再次触发动画效果）
-         */
+        
         private int mDialogAnim;
 
         private DialogLifecycle(Activity activity, BaseDialog dialog) {
@@ -1195,9 +952,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             unregisterActivityLifecycleCallbacks();
         }
 
-        /**
-         * 注册 Activity 生命周期监听
-         */
+        
         private void registerActivityLifecycleCallbacks() {
             if (mActivity == null) {
                 return;
@@ -1210,9 +965,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
             }
         }
 
-        /**
-         * 反注册 Activity 生命周期监听
-         */
+        
         private void unregisterActivityLifecycleCallbacks() {
             if (mActivity == null) {
                 return;
@@ -1226,9 +979,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * Dialog 监听包装类（修复原生 Dialog 监听器对象导致的内存泄漏）
-     */
+    
     private static final class ListenersWrapper<T extends DialogInterface.OnShowListener & DialogInterface.OnCancelListener & DialogInterface.OnDismissListener>
             extends SoftReference<T> implements DialogInterface.OnShowListener, DialogInterface.OnCancelListener, DialogInterface.OnDismissListener {
 
@@ -1261,9 +1012,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * 点击事件包装类
-     */
+    
     @SuppressWarnings("rawtypes")
     private static final class ViewClickWrapper
             implements View.OnClickListener {
@@ -1287,9 +1036,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * 显示监听包装类
-     */
+    
     private static final class ShowListenerWrapper
             extends SoftReference<DialogInterface.OnShowListener>
             implements OnShowListener {
@@ -1308,9 +1055,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * 取消监听包装类
-     */
+    
     private static final class CancelListenerWrapper
             extends SoftReference<DialogInterface.OnCancelListener>
             implements OnCancelListener {
@@ -1329,9 +1074,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * 销毁监听包装类
-     */
+    
     private static final class DismissListenerWrapper
             extends SoftReference<DialogInterface.OnDismissListener>
             implements OnDismissListener {
@@ -1350,9 +1093,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * 按键监听包装类
-     */
+    
     private static final class KeyListenerWrapper
             implements DialogInterface.OnKeyListener {
 
@@ -1372,9 +1113,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * post 任务包装类
-     */
+    
     private static final class ShowPostWrapper implements OnShowListener {
 
         private final Runnable mRunnable;
@@ -1393,9 +1132,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * postDelayed 任务包装类
-     */
+    
     private static final class ShowPostDelayedWrapper implements OnShowListener {
 
         private final Runnable mRunnable;
@@ -1416,9 +1153,7 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * postAtTime 任务包装类
-     */
+    
     private static final class ShowPostAtTimeWrapper implements OnShowListener {
 
         private final Runnable mRunnable;
@@ -1439,69 +1174,45 @@ public class BaseDialog extends AppCompatDialog implements LifecycleOwner,
         }
     }
 
-    /**
-     * 点击监听器
-     */
+    
     public interface OnClickListener<V extends View> {
 
-        /**
-         * 点击事件触发了
-         */
+        
         void onClick(BaseDialog dialog, V view);
     }
 
-    /**
-     * 创建监听器
-     */
+    
     public interface OnCreateListener {
 
-        /**
-         * Dialog 创建了
-         */
+        
         void onCreate(BaseDialog dialog);
     }
 
-    /**
-     * 显示监听器
-     */
+    
     public interface OnShowListener {
 
-        /**
-         * Dialog 显示了
-         */
+        
         void onShow(BaseDialog dialog);
     }
 
-    /**
-     * 取消监听器
-     */
+    
     public interface OnCancelListener {
 
-        /**
-         * Dialog 取消了
-         */
+        
         void onCancel(BaseDialog dialog);
     }
 
-    /**
-     * 销毁监听器
-     */
+    
     public interface OnDismissListener {
 
-        /**
-         * Dialog 销毁了
-         */
+        
         void onDismiss(BaseDialog dialog);
     }
 
-    /**
-     * 按键监听器
-     */
+    
     public interface OnKeyListener {
 
-        /**
-         * 触发了按键
-         */
+        
         boolean onKey(BaseDialog dialog, KeyEvent event);
     }
 }
